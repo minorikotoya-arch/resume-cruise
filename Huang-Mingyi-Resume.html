@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huang Mingyi — Resume</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Arial', sans-serif;
+      font-size: 10pt;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.45;
+      padding: 0;
+    }
+
+    .page {
+      width: 210mm;
+      height: auto;
+      margin: 0 auto;
+      padding: 14mm 18mm 12mm 18mm;
+      background: #fff;
+    }
+
+    /* ── HEADER ── */
+    .hd { border-bottom: 2.5px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 12px; }
+    .hd-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 25pt;
+      font-weight: 600;
+      letter-spacing: -.3px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hd-contact {
+      font-size: 9.5pt;
+      color: #444;
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .hd-contact span { display: flex; align-items: center; }
+    .hd-contact span + span::before {
+      content: "·";
+      margin: 0 10px;
+      color: #bbb;
+    }
+
+    /* ── SECTIONS ── */
+    .sec { margin-bottom: 10px; }
+    .sec-title {
+      font-size: 8.5pt;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2px;
+      margin-bottom: 7px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary p { font-size: 9.5pt; color: #2a2a2a; line-height: 1.5; }
+
+    /* ── EXPERIENCE ── */
+    .job { margin-bottom: 8px; }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1px;
+    }
+    .job-title {
+      font-weight: 600;
+      font-size: 10pt;
+    }
+    .job-date {
+      font-size: 9pt;
+      color: #666;
+      white-space: nowrap;
+    }
+    .job-company {
+      font-size: 9pt;
+      color: #444;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+    .job ul {
+      padding-left: 14px;
+      list-style: none;
+    }
+    .job ul li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
+      line-height: 1.45;
+      color: #1a1a1a;
+    }
+    .job ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: #888;
+    }
+    .job ul li strong {
+      font-weight: 600;
+    }
+
+    /* ── SUBSECTION LABELS ── */
+    .sub-label {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #333;
+      margin: 5px 0 2px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .edu-school { font-weight: 600; font-size: 10pt; }
+    .edu-date   { font-size: 9pt; color: #666; white-space: nowrap; }
+    .edu-degree { font-size: 9.5pt; color: #444; margin-top: 1px; font-style: italic; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 3px 10px;
+    }
+    .sk-cat {
+      font-size: 9pt;
+      font-weight: 600;
+      color: #444;
+      padding-top: 1px;
+    }
+    .sk-val {
+      font-size: 9pt;
+      color: #1a1a1a;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      html { height: 297mm; overflow: hidden; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .page { padding: 12mm 16mm 10mm 16mm; box-shadow: none; }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="hd">
+    <div class="hd-name">Huang Mingyi</div>
+    <div class="hd-contact">
+      <span>Shenzhen, Guangdong, China</span>
+      <span>+86 155-2147-0885</span>
+      <span>urnotkazuaki@gmail.com</span>
+    </div>
+  </header>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <section class="sec summary">
+    <div class="sec-title">Professional Summary</div>
+    <p>
+      Japanese–English bilingual professional with JLPT N1 certification, native Mandarin and Cantonese, and fluent spoken English. Experienced in Japanese localization, English-to-Japanese translation, graphic design, and short-form video production within a multilingual content workflow; proficient in Canva and Adobe Photoshop. Known for accuracy, attention to detail, and consistently meeting deadlines across concurrent projects. Previous background in public administration and front-line customer service.
+    </p>
+  </section>
+
+  <!-- WORK EXPERIENCE -->
+  <section class="sec">
+    <div class="sec-title">Work Experience</div>
+
+    <!-- JOB 1: CURRENT -->
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Japanese Localization &amp; Visual Content Specialist</span>
+        <span class="job-date">Feb 2025 – Present</span>
+      </div>
+      <div class="job-company">Yishang Information Technology Co., Ltd. · Shenzhen, China</div>
+
+      <div class="sub-label">Japanese Translation &amp; Copywriting</div>
+      <ul>
+        <li>Authored original Japanese-language copy and adapted English source materials into natural, reader-friendly Japanese for gaming platforms, AI tool sites, and app download pages — including product descriptions, instructional guides, and promotional text.</li>
+        <li>Served as the sole Japanese language reviewer before every publish, checking grammar, spelling, punctuation, and natural expression; independently upheld quality standards across <strong>20+ pages</strong>.</li>
+        <li>Revised and updated existing Japanese content whenever product information changed, maintaining accuracy and consistency across all live versions.</li>
+      </ul>
+
+      <div class="sub-label">Video Production &amp; Graphic Design</div>
+      <ul>
+        <li>Led end-to-end short-form video production for Japanese-market audiences — scripting, editing, cover design, and multi-platform publishing — as the primary visual content output of the role.</li>
+        <li>Designed video covers, blog article thumbnails, and promotional graphics using <strong>Canva</strong> and <strong>Adobe Photoshop</strong>, maintaining a consistent visual identity across content series.</li>
+        <li>Designed page layouts and color systems for a character encyclopedia project; the template was recognized for quality and <strong>adopted directly by the English-language team</strong> as a production standard.</li>
+        <li>Built reusable visual templates for recurring content types to speed up production of new and seasonal materials.</li>
+      </ul>
+
+      <div class="sub-label">Production Coordination</div>
+      <ul>
+        <li>Managed translation, design, and video production concurrently across multiple live projects, consistently meeting deadlines; prepared documentation and handover notes to support cross-team review and approval at each stage.</li>
+      </ul>
+    </div>
+
+    <!-- JOB 2: GOVERNMENT -->
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Administrative Staff</span>
+        <span class="job-date">Jun 2021 – Apr 2022</span>
+      </div>
+      <div class="job-company">Community Services Office · Maoming, Guangdong, China</div>
+      <ul>
+        <li>Processed and organized administrative documents, correspondence, and records in a public-facing government office.</li>
+        <li>Assisted with internal coordination between departments, routing inquiries and ensuring information reached the right stakeholders on time.</li>
+        <li>Provided direct assistance to members of the public, handling a high volume of daily interactions with patience and professionalism.</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="sec">
+    <div class="sec-title">Education</div>
+    <div class="edu-row">
+      <span class="edu-school">South China Agricultural University</span>
+      <span class="edu-date">Sep 2017 – Jun 2021</span>
+    </div>
+    <div class="edu-degree">Bachelor of Arts in Japanese Language · School of Foreign Languages · Guangzhou, China</div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="sec">
+    <div class="sec-title">Skills &amp; Tools</div>
+    <div class="skills-grid">
+      <span class="sk-cat">Languages</span>
+      <span class="sk-val">Japanese (JLPT N1, fluent written &amp; spoken) &nbsp;|&nbsp; English (fluent spoken, professional written) &nbsp;|&nbsp; Mandarin (Native) &nbsp;|&nbsp; Cantonese (Native)</span>
+
+      <span class="sk-cat">Design</span>
+      <span class="sk-val">Canva (primary) &nbsp;|&nbsp; Adobe Photoshop &nbsp;|&nbsp; Cover &amp; thumbnail design &nbsp;|&nbsp; Page layout &amp; templates</span>
+
+      <span class="sk-cat">Video</span>
+      <span class="sk-val">CapCut &nbsp;|&nbsp; Adobe Audition &nbsp;|&nbsp; Scripting, editing &amp; publishing</span>
+
+      <span class="sk-cat">Office</span>
+      <span class="sk-val">Microsoft Word &nbsp;|&nbsp; Google Workspace &nbsp;|&nbsp; Document management</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

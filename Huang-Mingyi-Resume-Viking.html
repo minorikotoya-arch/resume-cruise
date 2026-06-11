@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huang Mingyi — Resume</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Arial', sans-serif;
+      font-size: 10pt;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.45;
+      padding: 0;
+    }
+
+    .page {
+      width: 210mm;
+      height: auto;
+      margin: 0 auto;
+      padding: 14mm 18mm 12mm 18mm;
+      background: #fff;
+    }
+
+    /* ── HEADER ── */
+    .hd { border-bottom: 2.5px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 12px; }
+    .hd-name {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 25pt;
+      font-weight: 600;
+      letter-spacing: -.3px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hd-contact {
+      font-size: 9.5pt;
+      color: #444;
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .hd-contact span { display: flex; align-items: center; }
+    .hd-contact span + span::before {
+      content: "·";
+      margin: 0 10px;
+      color: #bbb;
+    }
+
+    /* ── SECTIONS ── */
+    .sec { margin-bottom: 10px; }
+    .sec-title {
+      font-size: 8.5pt;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2px;
+      margin-bottom: 7px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary p { font-size: 9.5pt; color: #2a2a2a; line-height: 1.5; }
+
+    /* ── EXPERIENCE ── */
+    .job { margin-bottom: 8px; }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1px;
+    }
+    .job-title { font-weight: 600; font-size: 10pt; }
+    .job-date  { font-size: 9pt; color: #666; white-space: nowrap; }
+    .job-company {
+      font-size: 9pt;
+      color: #444;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+    .job ul { padding-left: 14px; list-style: none; }
+    .job ul li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
+      line-height: 1.45;
+      color: #1a1a1a;
+    }
+    .job ul li::before { content: "–"; position: absolute; left: 0; color: #888; }
+    .job ul li strong { font-weight: 600; }
+
+    /* ── SUBSECTION LABELS ── */
+    .sub-label {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #333;
+      margin: 5px 0 2px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .edu-school { font-weight: 600; font-size: 10pt; }
+    .edu-date   { font-size: 9pt; color: #666; white-space: nowrap; }
+    .edu-degree { font-size: 9.5pt; color: #444; margin-top: 1px; font-style: italic; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 3px 10px;
+    }
+    .sk-cat { font-size: 9pt; font-weight: 600; color: #444; padding-top: 1px; }
+    .sk-val { font-size: 9pt; color: #1a1a1a; }
+
+    /* ── PRINT ── */
+    @media print {
+      html { height: 297mm; overflow: hidden; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .page { padding: 12mm 16mm 10mm 16mm; box-shadow: none; }
+    }
+
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="hd">
+    <div class="hd-name">Huang Mingyi</div>
+    <div class="hd-contact">
+      <span>Shenzhen, Guangdong, China</span>
+      <span>+86 155-2147-0885</span>
+      <span>urnotkazuaki@gmail.com</span>
+    </div>
+  </header>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <section class="sec summary">
+    <div class="sec-title">Professional Summary</div>
+    <p>
+      Japanese–English bilingual professional with JLPT N1 certification, native Mandarin and Cantonese, and fluent spoken English. Background spans public-facing service roles, financial administration, and Japanese-language content for international audiences. Proven ability to manage high-volume guest and public interactions with patience and professionalism, handle cash and financial records accurately, and work effectively in structured, fast-paced environments. Organized, adaptable, and motivated by delivering a consistently positive experience to every person I interact with.
+    </p>
+  </section>
+
+  <!-- WORK EXPERIENCE -->
+  <section class="sec">
+    <div class="sec-title">Work Experience</div>
+
+    <!-- JOB 1: CURRENT -->
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Japanese Localization &amp; Content Specialist</span>
+        <span class="job-date">Feb 2025 – Present</span>
+      </div>
+      <div class="job-company">Yishang Information Technology Co., Ltd. · Shenzhen, China</div>
+      <ul>
+        <li>Serve as the primary Japanese-language point of contact for internal teams, handling all Japanese communication, translation requests, and language quality review.</li>
+        <li>Coordinate with product managers, designers, and cross-functional teams to gather requirements, manage timelines, and deliver outputs on schedule — maintaining clear records of each project's status.</li>
+        <li>Manage a concurrent workflow across multiple projects, consistently meeting deadlines while maintaining accuracy and attention to detail throughout.</li>
+      </ul>
+    </div>
+
+    <!-- JOB 2: GOVERNMENT FINANCE -->
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Finance &amp; Administrative Staff</span>
+        <span class="job-date">Jun 2021 – Apr 2022</span>
+      </div>
+      <div class="job-company">Township Government Finance Office · Maoming, Guangdong, China</div>
+
+      <div class="sub-label">Financial Administration</div>
+      <ul>
+        <li>Processed financial documents, managed budget records, and compiled annual financial reports using Excel and office database systems — maintaining accuracy and auditability at all times.</li>
+        <li>Handled payment records and financial data entry with a zero-error standard, ensuring all figures reconciled correctly before submission.</li>
+        <li>Prepared regular reports and administrative documents for internal review, managing version control and stakeholder distribution.</li>
+      </ul>
+
+      <div class="sub-label">Public Service &amp; Communication</div>
+      <ul>
+        <li>Rotated to community-level service posts, serving as the direct point of contact for residents' questions and concerns — independently assessing each situation and identifying appropriate solutions or referrals.</li>
+        <li>Managed a wide range of inquiries from members of the public, including complex or sensitive cases, maintaining composure and a solution-focused approach at all times.</li>
+        <li>Coordinated between government departments to follow up on unresolved cases, ensuring every inquiry received a clear response and outcome.</li>
+      </ul>
+    </div>
+
+    <!-- JOB 3: PART-TIME SERVICE (university) -->
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Customer Service &amp; Cashier (Part-time)</span>
+        <span class="job-date">2017 – 2021</span>
+      </div>
+      <div class="job-company">Retail &amp; After-Sales Service · Maoming, China</div>
+      <ul>
+        <li>Operated cash registers, processed transactions, handled cash floats, and balanced daily takings in a high-traffic retail environment.</li>
+        <li>Managed customer complaints and after-sales inquiries, providing clear and calm resolutions to ensure customer satisfaction.</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="sec">
+    <div class="sec-title">Education</div>
+    <div class="edu-row">
+      <span class="edu-school">South China Agricultural University</span>
+      <span class="edu-date">Sep 2017 – Jun 2021</span>
+    </div>
+    <div class="edu-degree">Bachelor of Arts in Japanese Language · School of Foreign Languages · Guangzhou, China</div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="sec">
+    <div class="sec-title">Skills &amp; Competencies</div>
+    <div class="skills-grid">
+      <span class="sk-cat">Languages</span>
+      <span class="sk-val">Japanese (JLPT N1, fluent written &amp; spoken) &nbsp;|&nbsp; English (fluent spoken &amp; written) &nbsp;|&nbsp; Mandarin (Native) &nbsp;|&nbsp; Cantonese (Native)</span>
+
+      <span class="sk-cat">Finance</span>
+      <span class="sk-val">Cash handling &amp; reconciliation &nbsp;|&nbsp; Financial data entry &nbsp;|&nbsp; Annual report preparation</span>
+
+      <span class="sk-cat">IT / Office</span>
+      <span class="sk-val">Microsoft Excel &nbsp;|&nbsp; Word &nbsp;|&nbsp; Google Workspace &nbsp;|&nbsp; Database entry &amp; management</span>
+
+      <span class="sk-cat">Service</span>
+      <span class="sk-val">Front-of-house guest interaction &nbsp;|&nbsp; Complaint resolution &nbsp;|&nbsp; Multilingual communication</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
