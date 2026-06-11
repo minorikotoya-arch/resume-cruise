@@ -1,36 +1,42 @@
-# Resume — Cruise Ship / クルーズ船求職履歴書
+# Resume — Cruise Ship Applications
 
-黄明怡（Huang Mingyi）のクルーズ船会社向け英語履歴書一式。
+Job application resume package by Huang Mingyi (黄明怡) for cruise ship entertainment positions.
 
-## 概要
+## Overview
 
-Disney Cruise Line（DCL）および Viking Cruises を含む複数のクルーズ会社向けに制作した英語 HTML 履歴書と PDF 版。
+Tailored English resumes for cruise line companies requiring **Japanese + English** bilingual skills. Versions are customized for Disney Cruise Line (DCL) and Viking Cruises.
 
-## ファイル構成
+## File Structure
 
 ```
 resume-cruise/
-├── Huang-Mingyi-Resume.html           # ベース版（汎用）
-├── Huang-Mingyi-Resume-DCL.html       # Disney Cruise Line 向けカスタマイズ版
-├── Huang-Mingyi-Resume-Viking.html    # Viking Cruises 向けカスタマイズ版
-├── adobe-express-qr-code.png          # 連絡先 QR コード
-├── 二维码.png                          # QR コード（別バージョン）
-└── cruise ship/                       # PDF 版（印刷・提出用）
-    ├── Huang Mingyi Resume DCL.pdf    # Disney Cruise Line 向け PDF
-    ├── Huang Mingyi Resume Viking.pdf # Viking Cruises 向け PDF
-    └── Huang Mingyi 黄 Resume.pdf     # ベース版 PDF
+├── Huang-Mingyi-Resume.html           # Base version (general)
+├── Huang-Mingyi-Resume-DCL.html       # Customized for Disney Cruise Line
+├── Huang-Mingyi-Resume-Viking.html    # Customized for Viking Cruises
+├── adobe-express-qr-code.png          # Contact QR code
+├── 下载.png                            # QR code (alternate version)
+└── cruise ship/                       # PDF versions (for submission)
+    ├── Huang Mingyi Resume DCL.pdf    # Disney Cruise Line PDF
+    ├── Huang Mingyi Resume Viking.pdf # Viking Cruises PDF
+    └── Huang Mingyi — Resume.pdf      # Base version PDF
 ```
 
-## バージョン・アーカイブ説明
+## Version Notes
 
-| ファイル | 日付 | 説明 |
+| File | Date | Description |
 |---|---|---|
-| `Huang-Mingyi-Resume.html` | 2026-06-09 | ベース版（汎用） |
-| `Huang-Mingyi-Resume-DCL.html` | 2026-06-10 | Disney Cruise Line 向けカスタマイズ |
-| `Huang-Mingyi-Resume-Viking.html` | 2026-06-10 | Viking Cruises 向けカスタマイズ |
-| `cruise ship/*.pdf` | 2026-06-09 | 各版の PDF エクスポート（提出用） |
+| `Huang-Mingyi-Resume.html` | 2026-06-09 | Base version |
+| `Huang-Mingyi-Resume-DCL.html` | 2026-06-10 | Customized for Disney Cruise Line |
+| `Huang-Mingyi-Resume-Viking.html` | 2026-06-10 | Customized for Viking Cruises |
+| `cruise ship/*.pdf` | 2026-06-09 | PDF exports of each version (for submission) |
 
-## 応募先
+## Target Positions
 
-- **Disney Cruise Line (DCL)** — エンターテインメント部門
-- **Viking Cruises** — エンターテインメント・ホスピタリティ部門
+| Company | Language Requirements | Division |
+|---|---|---|
+| **Disney Cruise Line (DCL)** | English + Japanese | Entertainment |
+| **Viking Cruises** | English + Japanese | Entertainment / Hospitality |
+
+## Language Note
+
+These resumes are written in **English**, as the target employers are international cruise companies (US/European). Japanese language proficiency is listed as a key skill, not used as the resume language.
