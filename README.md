@@ -1,42 +1,41 @@
 # Resume — Cruise Ship Applications
 
-Job application resume package by Huang Mingyi (黄明怡) for cruise ship entertainment positions.
+Job application resume package by Huang Mingyi (黄铭怡) for cruise ship positions.
 
 ## Overview
 
-Tailored English resumes for cruise line companies requiring **Japanese + English** bilingual skills. Versions are customized for Disney Cruise Line (DCL) and Viking Cruises.
+Tailored English resumes for cruise line companies requiring **Japanese + English** (and Mandarin / Cantonese) bilingual skills. Each version is customized to match the specific job description and role type.
 
 ## File Structure
 
 ```
 resume-cruise/
-├── Huang-Mingyi-Resume.html           # Base version (general)
-├── Huang-Mingyi-Resume-DCL.html       # Customized for Disney Cruise Line
-├── Huang-Mingyi-Resume-Viking.html    # Customized for Viking Cruises
-├── adobe-express-qr-code.png          # Contact QR code
-├── 下载.png                            # QR code (alternate version)
-└── cruise ship/                       # PDF versions (for submission)
-    ├── Huang Mingyi Resume DCL.pdf    # Disney Cruise Line PDF
-    ├── Huang Mingyi Resume Viking.pdf # Viking Cruises PDF
-    └── Huang Mingyi — Resume.pdf      # Base version PDF
+├── Huang-Mingyi-Resume.html           # Princess Cruises — Graphic Designer & Translator
+├── Huang-Mingyi-Resume-Viking.html    # Viking Cruises — Japanese Speaking Explorer Staff
+├── Huang-Mingyi-Resume-DCL.html       # Disney Cruise Line — Guest Services (Project Hiro)
+└── cruise ship/                       # PDF exports for submission
 ```
 
 ## Version Notes
 
-| File | Date | Description |
-|---|---|---|
-| `Huang-Mingyi-Resume.html` | 2026-06-09 | Base version |
-| `Huang-Mingyi-Resume-DCL.html` | 2026-06-10 | Customized for Disney Cruise Line |
-| `Huang-Mingyi-Resume-Viking.html` | 2026-06-10 | Customized for Viking Cruises |
-| `cruise ship/*.pdf` | 2026-06-09 | PDF exports of each version (for submission) |
+| File | Target Company | Role Type | Updated |
+|---|---|---|---|
+| Huang-Mingyi-Resume.html | Princess Cruises | Shipboard Graphic Designer & Translator (Japanese) | 2026-06-09 |
+| Huang-Mingyi-Resume-Viking.html | Viking Cruises | Japanese Speaking Explorer Staff | 2026-06-11 |
+| Huang-Mingyi-Resume-DCL.html | Disney Cruise Line | Guest Services — Project Hiro | 2026-06-11 |
 
-## Target Positions
+## Resume Strategy by Role
 
-| Company | Language Requirements | Division |
-|---|---|---|
-| **Disney Cruise Line (DCL)** | English + Japanese | Entertainment |
-| **Viking Cruises** | English + Japanese | Entertainment / Hospitality |
+| | Princess Cruises | Viking | Disney DCL |
+|---|---|---|---|
+| Primary angle | Translation + Graphic Design | Guest Service + Financial Admin | Multilingual Guest Service (4 languages) |
+| Key differentiator | JLPT N1 + design template adopted by English team | Cash handling + community service rotation | 4-language banner: JP / EN / Mandarin / Cantonese |
+| Government job focus | Public service mindset | Financial administration first | Community-facing service first |
 
-## Language Note
+## Applicant Profile
 
-These resumes are written in **English**, as the target employers are international cruise companies (US/European). Japanese language proficiency is listed as a key skill, not used as the resume language.
+- **Name:** Huang Mingyi (黄铭怡)
+- **Location:** Shenzhen, Guangdong, China
+- **Languages:** Japanese (JLPT N1) · English (Fluent) · Mandarin (Native) · Cantonese (Native)
+- **Current Role:** Japanese Localization & Visual Content Specialist
+- **Education:** BA Japanese Language, South China Agricultural University (2021)
