@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Princess Cruises</title>
+<style>
+:root{
+  --navy:#0a2240;--navy2:#1a3a5c;--gold:#c9a84c;--gold-light:#f0d98a;
+  --cream:#faf8f2;--white:#fff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e0d0;
+  --jp:#3b5bdb;--jp-bg:#f0f4ff;--en:#16a34a;--en-bg:#f0fdf4;
+  --warn:#d97706;--warn-bg:#fffbeb;--tip:#9333ea;--tip-bg:#fdf2f8;
+  --red:#dc2626;--red-bg:#fef2f2;
+  --chunk1:#e0f2fe;--chunk2:#fef3c7;--chunk3:#ede9fe;--chunk4:#dcfce7;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans CJK JP","Microsoft YaHei",sans-serif;background:var(--cream);color:var(--text);line-height:1.8;font-size:15px}
+
+/* ── HEADER ── */
+.hdr{background:var(--navy);color:#fff;padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.18) 0%,transparent 60%)}
+.hdr .crown{font-size:2rem;margin-bottom:6px}
+.hdr h1{font-size:1.3rem;font-weight:700;letter-spacing:.04em;position:relative}
+.hdr .sub{font-size:.8rem;color:var(--gold-light);margin-top:4px;position:relative}
+.badge-row{margin-top:10px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;position:relative}
+.badge{background:rgba(201,168,76,.25);border:1px solid var(--gold);color:var(--gold-light);border-radius:20px;padding:2px 12px;font-size:.75rem;font-weight:700}
+
+/* ── TABS ── */
+.tab-wrap{position:sticky;top:0;z-index:100;background:var(--white)}
+.tab-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;overflow-x:auto;white-space:nowrap;scrollbar-width:none;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{display:inline-block;padding:13px 16px;border:none;background:none;cursor:pointer;color:var(--muted);font-size:.83rem;font-weight:700;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-family:inherit}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--navy);border-color:var(--gold)}
+.tab-hint{display:none;text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0;background:var(--cream);border-bottom:1px solid var(--border)}
+@media(max-width:680px){.tab-hint{display:block}}
+
+/* ── PANELS ── */
+.panel{display:block;max-width:860px;margin:0 auto;padding:28px 16px 48px;scroll-margin-top:58px;border-bottom:3px dashed var(--border)}
+
+/* ── SECTION TITLE ── */
+.sec-title{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid var(--gold)}
+.sec-title .ico{font-size:1.3rem}
+.sec-title h2{font-size:1.1rem;color:var(--navy);font-weight:700}
+.sec-title .en{font-size:.75rem;color:var(--muted);margin-left:4px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:20px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+
+/* ── TIP BOXES ── */
+.box{border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:.86rem}
+.box.warn{background:var(--warn-bg);border:1px solid var(--warn)}
+.box.tip{background:var(--tip-bg);border:1px solid var(--tip)}
+.box.info{background:var(--jp-bg);border:1px solid var(--jp)}
+.box.green{background:var(--en-bg);border:1px solid var(--en)}
+.box.red{background:var(--red-bg);border:1px solid var(--red)}
+.box strong{display:block;margin-bottom:6px}
+.box ul{padding-left:18px}.box li{margin-bottom:3px}
+
+/* ── OVERVIEW GRID ── */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.ov-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+.ov-item .ico{font-size:1.5rem;margin-bottom:4px}
+.ov-item .lbl{font-size:.7rem;color:var(--muted);margin-bottom:3px;font-weight:700;letter-spacing:.04em}
+.ov-item .val{font-size:.88rem;font-weight:700;color:var(--navy)}
+
+/* ── VOCAB TABLE ── */
+.vocab-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.86rem}
+.vocab-table th{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-size:.78rem;font-weight:700}
+.vocab-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.vocab-table tr:hover td{background:#f8f8f8}
+.vocab-table .jp-word{font-size:1rem;font-weight:700;color:var(--jp);line-height:1.4}
+.vocab-table .reading{font-size:.75rem;color:var(--muted);display:block;margin-top:1px}
+.vocab-table .meaning{color:var(--text)}
+.vocab-table .example{font-size:.8rem;color:var(--muted);margin-top:3px;font-style:italic}
+.vocab-table .tag{display:inline-block;background:var(--jp-bg);border:1px solid var(--jp);border-radius:4px;padding:1px 6px;font-size:.7rem;color:var(--jp);font-weight:700;margin-left:4px}
+.vocab-table .tag.en{background:var(--en-bg);border-color:var(--en);color:var(--en)}
+.vocab-table .tag.warn{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+
+/* ── CHUNK ANSWER ── */
+.q-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);margin-bottom:20px;overflow:hidden}
+.q-head{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:10px}
+.q-num{background:var(--gold);color:var(--navy);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+.q-head .q-title{font-size:.9rem;font-weight:700}
+.q-head .q-sub{font-size:.75rem;color:rgba(255,255,255,.65);margin-top:2px}
+.q-body{padding:18px}
+.q-text{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:14px;padding:10px 14px;background:#f8fafc;border-radius:6px;border-left:3px solid var(--jp)}
+
+/* CHUNK SYSTEM */
+.chunks{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.chunk{border-radius:8px;padding:12px 14px;position:relative}
+.chunk::before{content:attr(data-n);position:absolute;top:8px;right:10px;font-size:.7rem;font-weight:800;opacity:.4}
+.chunk-1{background:var(--chunk1);border-left:3px solid #0ea5e9}
+.chunk-2{background:var(--chunk2);border-left:3px solid #d97706}
+.chunk-3{background:var(--chunk3);border-left:3px solid #9333ea}
+.chunk-4{background:var(--chunk4);border-left:3px solid #16a34a}
+.chunk .jp-text{font-size:.92rem;line-height:1.9;color:var(--text)}
+.chunk .cn-text{font-size:.8rem;color:var(--muted);margin-top:5px;line-height:1.6}
+.chunk .key{background:rgba(0,0,0,.08);border-radius:3px;padding:1px 5px;font-weight:700}
+
+/* LANG TABS within answer */
+.lang-tabs{display:flex;gap:6px;margin-bottom:10px}
+.lang-tab{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.lang-tab.jp.active{background:var(--jp-bg);border-color:var(--jp);color:var(--jp)}
+.lang-tab.en.active{background:var(--en-bg);border-color:var(--en);color:var(--en)}
+.lang-panel{display:none}
+.lang-panel.active{display:block}
+
+/* ── PATTERN CARD ── */
+.pattern-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.pattern-head{background:var(--jp-bg);border-bottom:1px solid var(--jp);padding:8px 14px;font-size:.8rem;font-weight:700;color:var(--jp)}
+.pattern-body{padding:12px 14px}
+.pattern-jp{font-size:1rem;color:var(--jp);font-weight:700;margin-bottom:4px}
+.pattern-read{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.pattern-cn{font-size:.85rem;color:var(--text);margin-bottom:8px}
+.pattern-ex{font-size:.82rem;background:#f8f9fa;border-radius:6px;padding:8px 10px;color:var(--text);line-height:1.8}
+.pattern-ex .ex-jp{font-weight:600}
+.pattern-ex .ex-cn{color:var(--muted);font-size:.78rem}
+
+/* ── RESCUE PHRASES ── */
+.rescue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.rescue-item{background:var(--red-bg);border:1px solid var(--red);border-radius:8px;padding:12px 14px}
+.rescue-item .r-jp{font-size:.95rem;font-weight:700;color:var(--red);margin-bottom:3px}
+.rescue-item .r-read{font-size:.73rem;color:var(--muted);margin-bottom:4px}
+.rescue-item .r-cn{font-size:.82rem;color:var(--text)}
+
+/* ── TRANSLATION ── */
+.trans-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);margin-bottom:18px;overflow:hidden}
+.trans-head{background:var(--navy);color:#fff;padding:10px 16px;font-size:.82rem;font-weight:700}
+.trans-body{padding:16px}
+.original{background:#f8f9fa;border-radius:6px;padding:12px;font-size:.88rem;line-height:1.8;margin-bottom:10px;border-left:3px solid #adb5bd;font-style:italic;color:#444}
+.key-phrases{margin-bottom:10px}
+.key-phrases .kp-title{font-size:.75rem;font-weight:700;color:var(--warn);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.kp-grid{display:flex;flex-wrap:wrap;gap:6px}
+.kp-item{background:var(--warn-bg);border:1px solid var(--warn);border-radius:6px;padding:4px 10px;font-size:.78rem}
+.kp-item .kp-en{color:var(--muted);font-size:.72rem;display:block}
+.reveal-btn{display:block;width:100%;padding:9px;background:var(--navy);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.83rem;font-weight:700;margin-top:8px;transition:background .2s;font-family:inherit}
+.reveal-btn:hover{background:var(--navy2)}
+.translation{background:var(--jp-bg);border-radius:6px;padding:12px;font-size:.88rem;line-height:1.9;border-left:3px solid var(--jp);margin-top:8px}
+
+/* ── CHECKLIST ── */
+.cl-list{list-style:none;padding:0}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:7px;margin-bottom:5px;background:var(--white);border:1px solid var(--border);font-size:.88rem}
+.cl-item input[type=checkbox]{width:17px;height:17px;margin-top:2px;accent-color:var(--navy);flex-shrink:0}
+.cl-item label{cursor:pointer;flex:1}
+.cl-item.done label{text-decoration:line-through;color:var(--muted)}
+
+/* ── EN VOCAB ── */
+.en-vocab-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.en-vocab-table th{background:var(--en);color:#fff;padding:8px 12px;text-align:left;font-size:.77rem}
+.en-vocab-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.en-vocab-table tr:hover td{background:#f8fdf8}
+.en-word{font-weight:700;color:var(--en);font-size:.95rem}
+.en-pron{font-size:.73rem;color:var(--muted);display:block}
+
+/* ── HIDDEN UTILITY ── */
+.hidden{display:none!important}
+
+/* ── MOBILE SWIPE CARDS (answers) ── */
+.swipe-hint{display:none;font-size:.72rem;color:var(--muted);text-align:right;margin-bottom:6px}
+@media(max-width:680px){.swipe-hint{display:block}}
+
+/* ── SIMULATION PANEL ── */
+.sim-progress{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:12px 16px;background:var(--navy);border-radius:var(--r);color:#fff}
+.sim-progress .sp-text{font-size:.85rem;font-weight:700}
+.sim-progress .sp-sub{font-size:.72rem;color:rgba(255,255,255,.65);margin-top:2px}
+.sim-nav{display:flex;gap:8px}
+.sim-nav-btn{padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.sim-nav-btn:hover{background:rgba(255,255,255,.15)}
+.sim-nav-btn.primary{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+
+.sim-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:16px;display:none}
+.sim-card.active{display:block}
+.sim-card-top{padding:18px 20px 14px}
+.lang-badge{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:3px 12px;font-size:.75rem;font-weight:800;margin-bottom:10px}
+.lang-badge.jp{background:var(--jp-bg);color:var(--jp);border:1px solid var(--jp)}
+.lang-badge.en{background:var(--en-bg);color:var(--en);border:1px solid var(--en)}
+.sim-qnum{font-size:.75rem;color:var(--muted);font-weight:700;margin-bottom:6px}
+.sim-qtext{font-size:1.05rem;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:6px}
+.sim-qtext-en{font-size:.85rem;color:var(--muted);margin-bottom:12px}
+.sim-timing{display:flex;gap:12px;margin-bottom:14px}
+.sim-t-badge{background:#f3f4f6;border-radius:6px;padding:4px 10px;font-size:.73rem;color:var(--muted);font-weight:600}
+.sim-t-badge span{color:var(--navy);font-weight:800}
+.sim-divider{height:1px;background:var(--border);margin:0 0 14px}
+
+.sim-answer-wrap{padding:0 20px 18px}
+.sim-answer{display:none}
+.sim-answer.show{display:block}
+.sim-ans-jp{background:var(--jp-bg);border-left:3px solid var(--jp);border-radius:8px;padding:14px 16px;font-size:.92rem;line-height:1.95;margin-bottom:10px}
+.sim-ans-jp .key{background:rgba(59,91,219,.12);border-radius:3px;padding:1px 5px;font-weight:700;color:var(--jp)}
+.sim-ans-en .key{background:rgba(22,163,74,.12);border-radius:3px;padding:1px 5px;font-weight:700;color:var(--en)}
+.sim-ans-en{background:var(--en-bg);border-left:3px solid var(--en);border-radius:8px;padding:14px 16px;font-size:.92rem;line-height:1.9;margin-bottom:10px}
+.sim-cn{font-size:.78rem;color:var(--muted);background:#f8f9fa;border-radius:6px;padding:8px 12px;line-height:1.7}
+.sim-tip{font-size:.78rem;background:var(--warn-bg);border:1px solid var(--warn);border-radius:6px;padding:8px 12px;margin-top:8px;color:#92400e}
+.reveal-sim-btn{display:block;width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700;font-family:inherit;transition:background .2s;margin-bottom:4px}
+.reveal-sim-btn:hover{background:var(--navy2)}
+.sim-dots{display:flex;justify-content:center;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.sim-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--white);font-size:.68rem;font-weight:800;cursor:pointer;color:var(--muted);transition:all .2s;display:flex;align-items:center;justify-content:center}
+.sim-dot.done{background:var(--en);border-color:var(--en);color:#fff}
+.sim-dot.active{background:var(--navy);border-color:var(--navy);color:#fff}
+@media(max-width:680px){
+  .sim-card-top{padding:14px 14px 10px}
+  .sim-answer-wrap{padding:0 14px 14px}
+  .sim-qtext{font-size:.95rem}
+}
+
+/* ── PROGRESS ── */
+.prog-hint{text-align:center;padding:20px;color:var(--muted);font-size:.9rem}
+
+/* ── BOTTOM NAV (mobile only) ── */
+.bottom-nav{display:none}
+@media(max-width:680px){
+  .bottom-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:var(--white);border-top:1px solid var(--border);
+    box-shadow:0 -2px 12px rgba(0,0,0,.1);z-index:200;
+    justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);
+  }
+  .bn-btn{
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:4px 6px;background:none;border:none;cursor:pointer;
+    font-size:.6rem;color:var(--muted);font-weight:700;font-family:inherit;
+    min-width:36px;
+  }
+  .bn-btn .bn-ico{font-size:1.25rem}
+  .bn-btn.active{color:var(--navy)}
+  .bn-btn.active .bn-ico{filter:drop-shadow(0 0 3px rgba(10,34,64,.4))}
+  /* Extra bottom padding so content isn't hidden behind bottom nav */
+  body{padding-bottom:72px}
+  .panel{padding-bottom:32px}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  /* Header */
+  .hdr{padding:20px 14px 16px}
+  .hdr h1{font-size:1.05rem;line-height:1.4}
+  .hdr .sub{font-size:.72rem}
+  .hdr .crown{font-size:1.6rem;margin-bottom:4px}
+  .badge{font-size:.68rem;padding:2px 9px}
+
+  /* Tab bar — smaller touch targets but still scrollable */
+  .tab-btn{padding:11px 11px;font-size:.75rem}
+
+  /* Panels */
+  .panel{padding:18px 12px 80px}
+
+  /* Cards & Q-cards */
+  .card{padding:14px 12px}
+  .q-body{padding:14px 12px}
+  .q-head{padding:10px 12px}
+  .q-head .q-title{font-size:.84rem}
+  .q-head .q-sub{font-size:.7rem}
+
+  /* Chunk labels: hide the corner label to avoid overlapping text */
+  .chunk::before{display:none}
+  .chunk{padding:11px 12px}
+  .chunk .jp-text{font-size:.88rem}
+  .chunk .cn-text{font-size:.78rem}
+
+  /* Overview grid: 2 cols on mobile */
+  .ov-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .ov-item{padding:10px 8px}
+  .ov-item .ico{font-size:1.2rem}
+  .ov-item .val{font-size:.82rem}
+
+  /* Vocab tables: hide 3rd column (usage examples) to fit screen */
+  .vocab-table th:nth-child(3),
+  .vocab-table td:nth-child(3){display:none}
+  .vocab-table .jp-word{font-size:.92rem}
+  .vocab-table td{padding:8px 10px}
+  .vocab-table th{padding:7px 10px}
+
+  /* EN vocab table: hide 3rd column */
+  .en-vocab-table th:nth-child(3),
+  .en-vocab-table td:nth-child(3){display:none}
+  .en-vocab-table td{padding:7px 10px}
+  .en-vocab-table .en-word{font-size:.88rem}
+
+  /* Rescue phrases: single column */
+  .rescue-grid{grid-template-columns:1fr}
+  .rescue-item{padding:10px 12px}
+  .rescue-item .r-jp{font-size:.88rem}
+
+  /* Pattern cards */
+  .pattern-body{padding:10px 12px}
+  .pattern-jp{font-size:.92rem}
+  .pattern-cn{font-size:.82rem}
+  .pattern-ex{font-size:.78rem;padding:7px 9px}
+
+  /* Translation */
+  .trans-body{padding:12px}
+  .original{font-size:.84rem;padding:10px}
+  .translation{font-size:.84rem;padding:10px}
+  .kp-item{font-size:.73rem}
+
+  /* Tip boxes */
+  .box{font-size:.82rem;padding:12px 13px}
+  .sec-title h2{font-size:1rem}
+
+  /* Checklist */
+  .cl-item{font-size:.84rem;padding:8px 10px}
+  .cl-item input[type=checkbox]{width:20px;height:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="crown">👑</div>
+  <h1>Princess Cruises</h1>
+  <p class="sub">Shipboard Graphic Designer &amp; Translator (Japanese Speaking) · Huang Mingyi</p>
+  <div class="badge-row">
+    <span class="badge">JLPT N1</span>
+    <span class="badge">Hireflix 单向录像</span>
+    <span class="badge">11题 · 约30分钟</span>
+    <span class="badge">前7-8题日语 · 后几题英语</span>
+  </div>
+</header>
+
+<!-- TAB BAR -->
+<div class="tab-wrap">
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab-btn active" onclick="switchTab('overview')">📋 概况</button>
+    <button class="tab-btn" onclick="switchTab('vocab-jp')">🇯🇵 日语词汇</button>
+    <button class="tab-btn" onclick="switchTab('patterns')">📐 句型</button>
+    <button class="tab-btn" onclick="switchTab('jp-qa')">💬 日语答题</button>
+    <button class="tab-btn" onclick="switchTab('translation')">🔤 口译</button>
+    <button class="tab-btn" onclick="switchTab('en-qa')">🇬🇧 英语答题</button>
+    <button class="tab-btn" onclick="switchTab('vocab-en')">📖 英语词汇</button>
+    <button class="tab-btn" onclick="switchTab('checklist')">✅ 清单</button>
+    <button class="tab-btn" style="color:var(--red);font-weight:800" onclick="switchTab('sim')">🎬 模拟面试</button>
+  </nav>
+  <div class="tab-hint">← 左右滑动切换标签 →</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 1: OVERVIEW
+═══════════════════════════════════════════ -->
+<div class="panel active" id="panel-overview">
+  <div class="sec-title"><span class="ico">📋</span><h2>考试概况 <span class="en">Interview Overview</span></h2></div>
+
+  <div class="ov-grid">
+    <div class="ov-item"><div class="ico">📹</div><div class="lbl">面试形式</div><div class="val">Hireflix 单向录像</div></div>
+    <div class="ov-item"><div class="ico">🔢</div><div class="lbl">题目数量</div><div class="val">11 道题</div></div>
+    <div class="ov-item"><div class="ico">⏱️</div><div class="lbl">预计时长</div><div class="val">约 30 分钟</div></div>
+    <div class="ov-item"><div class="ico">🌐</div><div class="lbl">题目语言</div><div class="val">全英文出题</div></div>
+    <div class="ov-item"><div class="ico">🗣️</div><div class="lbl">答题语言</div><div class="val">前7-8题日语</div></div>
+    <div class="ov-item"><div class="ico">🔄</div><div class="lbl">重录机会</div><div class="val">每题可重录1次</div></div>
+  </div>
+
+  <div class="box warn">
+    <strong>⚠️ 硬性规则（违反会影响评分）</strong>
+    <ul>
+      <li>全程摄像头不能离开画面，始终面对镜头</li>
+      <li>全程不可使用任何辅助工具——纸笔、手机、提词器均不可</li>
+      <li>推荐 Chrome 浏览器 / iPhone 用 Safari</li>
+      <li>安静、光线充足、网络稳定的环境</li>
+      <li>72小时内完成，建议状态好时抓紧做</li>
+    </ul>
+  </div>
+
+  <div class="box info">
+    <strong>📌 你的岗位 vs 小红书帖子的区别</strong>
+    帖子用户应聘的是<strong>餐厅接待</strong>类岗位，你的岗位是 <strong>Shipboard Graphic Designer &amp; Translator</strong>——船上平面设计师兼翻译。
+    <ul style="margin-top:6px">
+      <li>情景题重心：<strong>日语翻译协助宾客 / 设计工作多任务 / 质量把控</strong></li>
+      <li>餐饮投诉情景也可能有（邮轮所有岗位都面向宾客），所以两类都要准备</li>
+      <li>核心展示点：日语流利度 + 设计经验 + N1证书 + 多语言 + 细心</li>
+    </ul>
+  </div>
+
+  <div class="box tip">
+    <strong>💡 备考路径建议（按顺序）</strong>
+    <ul>
+      <li>第一步：<strong>日语词汇</strong> → 把不熟的词记下来反复看</li>
+      <li>第二步：<strong>句型模板</strong> → 把核心敬语句式练到张口就来</li>
+      <li>第三步：<strong>日语答题</strong> → 每道题按「分块」练，先练每块，再练整体</li>
+      <li>第四步：<strong>口译练习</strong> → 大声练习，允许用意译</li>
+      <li>第五步：<strong>英语词汇</strong> + <strong>英语答题</strong> → 熟悉关键词，练关键句</li>
+      <li>第六步：对着摄像头做全套模拟，不看稿子</li>
+    </ul>
+  </div>
+
+  <div class="box red">
+    <strong>🆘 卡壳急救原则</strong>
+    <ul>
+      <li>日语卡壳：先说「少々お時間いただけますでしょうか」争取1-2秒</li>
+      <li>英语卡壳：先说「That's a great question. Let me think for a moment.」</li>
+      <li>单词忘了：用意思相近的简单词替代，不要沉默超过3秒</li>
+      <li>严重卡壳：用重录机会，第二次发挥好更重要</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 2: 日语词汇
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-vocab-jp">
+  <div class="sec-title"><span class="ico">🇯🇵</span><h2>日语核心词汇 <span class="en">Japanese Vocabulary</span></h2></div>
+
+  <div class="box info">
+    <strong>📚 使用方法</strong>
+    把不熟的词用「Ctrl+D」书签收藏此页，每天打开看3遍。重点是「读出来」而不是看，嘴巴要动。
+  </div>
+
+  <div class="box red">
+    <strong>🎯 你的敬语策略：只背这5句，其他全用です/ます</strong>
+    你日常日语流利，问题只在敬语。解决方案不是背20个敬语表达——而是把下面5句练到<strong>完全自动</strong>，张口就来。其他部分用自然的です/ます即可，面试官在乎的是流畅度，不是敬语花哨程度。
+    <div style="margin-top:10px;display:grid;gap:8px">
+      <div style="background:#fff;border-radius:6px;padding:10px 12px;border-left:3px solid var(--red)">
+        <div style="font-weight:800;color:var(--red);font-size:.95rem">① 申し訳ございません</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:2px 0">もうしわけ ございません</div>
+        <div style="font-size:.82rem">= 非常抱歉 &nbsp;|&nbsp; 用于：任何道歉，比すみません正式10倍</div>
+      </div>
+      <div style="background:#fff;border-radius:6px;padding:10px 12px;border-left:3px solid var(--red)">
+        <div style="font-weight:800;color:var(--red);font-size:.95rem">② かしこまりました</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:2px 0">かしこまりました</div>
+        <div style="font-size:.82rem">= 明白了/遵命 &nbsp;|&nbsp; 用于：宾客或上司交代事情时</div>
+      </div>
+      <div style="background:#fff;border-radius:6px;padding:10px 12px;border-left:3px solid var(--red)">
+        <div style="font-weight:800;color:var(--red);font-size:.95rem">③ 少々お待ちいただけますか</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:2px 0">しょうしょう おまち いただけますか</div>
+        <div style="font-size:.82rem">= 能稍等一下吗 &nbsp;|&nbsp; 用于：需要时间处理、卡壳争取时间</div>
+      </div>
+      <div style="background:#fff;border-radius:6px;padding:10px 12px;border-left:3px solid var(--red)">
+        <div style="font-weight:800;color:var(--red);font-size:.95rem">④ ご不便をおかけして申し訳ございません</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:2px 0">ごふべんを おかけして もうしわけ ございません</div>
+        <div style="font-size:.82rem">= 给您添麻烦了 &nbsp;|&nbsp; 用于：宾客有不满、出了问题时</div>
+      </div>
+      <div style="background:#fff;border-radius:6px;padding:10px 12px;border-left:3px solid var(--red)">
+        <div style="font-weight:800;color:var(--red);font-size:.95rem">⑤ 何かあれば、いつでもお声がけください</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:2px 0">なにかあれば、いつでもおこえがけください</div>
+        <div style="font-size:.82rem">= 有任何需要请随时告诉我 &nbsp;|&nbsp; 用于：对话结束时的礼貌收尾</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:.8rem;color:#7f1d1d">💡 掌握这5句之后，其他部分只需正常说「〜です」「〜ます」「〜していただけますか」就够用了。</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:12px"><span class="ico">🎩</span><h2 style="font-size:.95rem">敬语扩展表达（备用，不强求背熟）</h2></div>
+    <table class="vocab-table">
+      <thead><tr><th>日语表达</th><th>中文意思</th><th>使用场景</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="jp-word">承りました</span><span class="reading">うけたまわりました</span></td>
+          <td class="meaning">我已知悉 / 收到了</td>
+          <td>收到投诉或请求时，比「わかりました」更正式</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">確認いたします</span><span class="reading">かくにん いたします</span></td>
+          <td class="meaning">我来确认一下</td>
+          <td>需要查清楚某事时，简单好用</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">いかがでしょうか</span><span class="reading">いかがでしょうか</span></td>
+          <td class="meaning">您觉得如何？</td>
+          <td>提出解决方案后征询意见</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">どのようなご用件でしょうか</span><span class="reading">どのような ごようけん でしょうか</span></td>
+          <td class="meaning">请问有什么事？</td>
+          <td>主动询问宾客来意，比「何ですか」礼貌</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">心よりお待ちしております</span><span class="reading">こころより おまち しております</span></td>
+          <td class="meaning">诚心期待您的光临</td>
+          <td>欢迎词结尾（口译广播时用）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:12px"><span class="ico">✈️</span><h2 style="font-size:.95rem">邮轮 / 旅游场景词汇</h2></div>
+    <table class="vocab-table">
+      <thead><tr><th>日语</th><th>中文 / 英文</th><th>例句/说明</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="jp-word">乗船 / ご乗船</span><span class="reading">じょうせん / ごじょうせん</span></td>
+          <td>登船 / embark</td>
+          <td>「ご乗船いただきありがとうございます」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">乗務員</span><span class="reading">じょうむいん</span></td>
+          <td>船员 / crew</td>
+          <td>「乗務員一同、心より歓迎申し上げます」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">集合場所</span><span class="reading">しゅうごうばしょ</span></td>
+          <td>集合站 / muster station</td>
+          <td>安全广播中必用词</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">救命胴衣</span><span class="reading">きゅうめいどうい</span></td>
+          <td>救生衣 / life jacket</td>
+          <td>「救命胴衣はクローゼット内に」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">航海 / 航路</span><span class="reading">こうかい / こうろ</span></td>
+          <td>航行 / voyage · route</td>
+          <td>「素晴らしい航海をお楽しみください」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">メインダイニング</span><span class="reading">めいんだいにんぐ</span></td>
+          <td>主餐厅 / main dining room</td>
+          <td>餐厅广播常用</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">ゲストサービス</span><span class="reading">げすとさーびす</span></td>
+          <td>宾客服务部 / guest services</td>
+          <td>「ゲストサービスまでお申し付けください」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">緊急の場合</span><span class="reading">きんきゅうのばあい</span></td>
+          <td>紧急情况下 / in an emergency</td>
+          <td>安全广播开头</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:12px"><span class="ico">🎨</span><h2 style="font-size:.95rem">设计 / 翻译工作词汇</h2></div>
+    <table class="vocab-table">
+      <thead><tr><th>日语</th><th>中文</th><th>面试中使用示例</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="jp-word">グラフィックデザイン</span></td>
+          <td>平面设计</td>
+          <td>「グラフィックデザインを担当しております」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">サムネイル</span></td>
+          <td>缩略图 / 封面图</td>
+          <td>「動画のサムネイルをデザインしました」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">テンプレート</span></td>
+          <td>模板</td>
+          <td>「テンプレートを作成し、英語チームにも採用されました」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">レイアウト</span></td>
+          <td>版面/排版</td>
+          <td>「ページレイアウトを担当しました」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">翻訳・ライティング</span><span class="reading">ほんやく・らいてぃんぐ</span></td>
+          <td>翻译 + 撰写</td>
+          <td>「日本語翻訳・ライティングを行っております」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">コピーライティング</span></td>
+          <td>文案写作</td>
+          <td>「日本語コピーライティングを担当」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">締め切り</span><span class="reading">しめきり</span></td>
+          <td>截止日期 / deadline</td>
+          <td>「締め切りを常に守ることを心がけています」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">品質管理</span><span class="reading">ひんしつかんり</span></td>
+          <td>质量管理</td>
+          <td>「品質管理として最終チェックを行いました」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">校正</span><span class="reading">こうせい</span></td>
+          <td>校对/校正</td>
+          <td>「日本語校正を一人で担当しておりました」</td>
+        </tr>
+        <tr>
+          <td><span class="jp-word">複数のプロジェクトを同時進行</span></td>
+          <td>多项目同步推进</td>
+          <td>「複数のプロジェクトを同時進行で管理」</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:12px"><span class="ico">🆘</span><h2 style="font-size:.95rem">卡壳急救短语（背熟！）</h2></div>
+    <div class="rescue-grid">
+      <div class="rescue-item">
+        <div class="r-jp">少々お時間いただけますでしょうか。</div>
+        <div class="r-read">しょうしょう おじかん いただけますでしょうか</div>
+        <div class="r-cn">能给我一点时间吗？（争取2秒思考）</div>
+      </div>
+      <div class="rescue-item">
+        <div class="r-jp">少し考えてからお答えしてもよろしいでしょうか。</div>
+        <div class="r-read">すこし かんがえてから おこたえしても よろしいでしょうか</div>
+        <div class="r-cn">我能稍微想一想再回答吗？</div>
+      </div>
+      <div class="rescue-item">
+        <div class="r-jp">つまり、〜ということです。</div>
+        <div class="r-read">つまり〜ということです</div>
+        <div class="r-cn">也就是说，〜（换个方式重新表达）</div>
+      </div>
+      <div class="rescue-item">
+        <div class="r-jp">おっしゃる通りでございます。</div>
+        <div class="r-read">おっしゃるとおりでございます</div>
+        <div class="r-cn">您说得对。（表示同意时用）</div>
+      </div>
+      <div class="rescue-item">
+        <div class="r-jp">具体的に申し上げますと、〜</div>
+        <div class="r-read">ぐたいてきに もうしあげますと</div>
+        <div class="r-cn">具体来说，〜（展开说明时用）</div>
+      </div>
+      <div class="rescue-item">
+        <div class="r-jp">例えば、〜という経験があります。</div>
+        <div class="r-read">たとえば〜というけいけんがあります</div>
+        <div class="r-cn">比如，我有〜这样的经历。（举例）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 3: 句型模板
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-patterns">
+  <div class="sec-title"><span class="ico">📐</span><h2>核心句型模板 <span class="en">Key Sentence Patterns</span></h2></div>
+
+  <div class="box info">
+    <strong>🎯 使用方法</strong>
+    这些是面试中最常用的句型框架。把「＿＿」的部分换成你要说的内容。每个句型大声说5遍直到自然。
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:14px"><span class="ico">🙋</span><h2 style="font-size:.95rem">自我介绍类句型</h2></div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 1 · 自我介绍开场</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">はじめまして。＿＿と申します。＿＿出身で、現在＿＿に在住しております。</div>
+        <div class="pattern-cn">初次见面，我叫＿＿。来自＿＿，目前居住在＿＿。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">はじめまして。黄明儀と申します。中国の深圳出身で、現在も深圳に在住しております。</div>
+          <div class="ex-cn">初次见面，我叫黄明儀。来自中国深圳，目前仍居住在深圳。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 2 · 资格/能力描述</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">＿＿を取得しており、＿＿は読み書き・会話ともに流暢に対応できます。</div>
+        <div class="pattern-cn">我持有＿＿证书，＿＿语的读写和会话都可以流利应对。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">JLPT N1を取得しており、日本語は読み書き・会話ともに流暢に対応できます。</div>
+          <div class="ex-cn">持有JLPT N1证书，日语读写和会话均可流利应对。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 3 · 现职工作描述</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">現在は＿＿にて、＿＿と＿＿を担当しております。</div>
+        <div class="pattern-cn">目前在＿＿负责＿＿和＿＿工作。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">現在は深圳のIT企業にて、日本語翻訳・ライティングと、グラフィックデザイン・動画制作を担当しております。</div>
+          <div class="ex-cn">目前在深圳一家IT公司负责日语翻译/文案撰写和平面设计/视频制作。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 4 · 结尾表达抱负</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">プリンセス・クルーズでは、私の＿＿を活かし、＿＿に貢献したいと考えております。</div>
+        <div class="pattern-cn">在公主邮轮，我希望发挥自己的＿＿，为＿＿做出贡献。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">プリンセス・クルーズでは、私の日本語力とデザインスキルを活かし、日本語をお話しになるお客様に最高の体験をお届けしたいと考えております。</div>
+          <div class="ex-cn">在公主邮轮，希望发挥我的日语能力和设计技能，为说日语的宾客提供最佳体验。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:14px"><span class="ico">🍽️</span><h2 style="font-size:.95rem">服务应对类句型</h2></div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 5 · 道歉并了解问题</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">この度はご不便をおかけしてしまい、誠に申し訳ございません。どのような点が＿＿か、詳しくお聞かせいただけますでしょうか？</div>
+        <div class="pattern-cn">这次给您带来了不便，深感抱歉。能告诉我具体哪里＿＿吗？</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">この度はご不便をおかけしてしまい、誠に申し訳ございません。どのような点がお気に召さなかったか、詳しくお聞かせいただけますでしょうか？</div>
+          <div class="ex-cn">这次给您带来了不便，深感抱歉。能告诉我哪里不满意的具体情况吗？</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 6 · 承诺处理 + 结束</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">早急に＿＿に確認の上、＿＿させていただきます。今しばらくお待ちいただけますでしょうか。</div>
+        <div class="pattern-cn">我会立刻向＿＿确认，然后为您＿＿。能请您稍等片刻吗？</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">早急に担当者に確認の上、対応させていただきます。今しばらくお待ちいただけますでしょうか。</div>
+          <div class="ex-cn">我会立刻向负责人确认，然后为您处理。能请您稍等片刻吗？</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 7 · 繁忙时的礼貌告知</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">ただいま＿＿を対応中でございますが、すぐにご用件をお伺いいたします。少々お時間をいただけますでしょうか。</div>
+        <div class="pattern-cn">我现在正在处理＿＿，但会马上为您服务。能给我一点时间吗？</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">ただいま別の業務を対応中でございますが、すぐにご用件をお伺いいたします。少々お時間をいただけますでしょうか。</div>
+          <div class="ex-cn">我现在正在处理其他事务，但会马上为您服务。能给我一点时间吗？</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--jp);margin-bottom:14px"><span class="ico">📢</span><h2 style="font-size:.95rem">广播 / 翻译类句型</h2></div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 8 · 欢迎词开场</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">＿＿へようこそお越しくださいました。＿＿一同、心より歓迎申し上げます。</div>
+        <div class="pattern-cn">欢迎来到＿＿。＿＿全体人员诚挚欢迎您的光临。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">グランド・プリンセス号へようこそお越しくださいました。乗務員一同、心より歓迎申し上げます。</div>
+          <div class="ex-cn">欢迎乘坐大公主号。全体船员诚挚欢迎您的光临。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 9 · 通知/注意事项</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">お客様にお知らせいたします。＿＿でございます。＿＿ますようお願い申し上げます。</div>
+        <div class="pattern-cn">各位宾客，我们通知您：＿＿。请您＿＿。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">お客様にお知らせいたします。まもなくショーが始まります。携帯電話の電源をお切りいただきますようお願い申し上げます。</div>
+          <div class="ex-cn">各位宾客通知，演出即将开始，请关闭手机电源。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-head">Pattern 10 · 广播结束语</div>
+      <div class="pattern-body">
+        <div class="pattern-jp">何かご不明な点やご要望がございましたら、＿＿までお気軽にお申し付けください。</div>
+        <div class="pattern-cn">如有任何疑问或需求，请随时告知＿＿。</div>
+        <div class="pattern-ex">
+          <div class="ex-jp">何かご不明な点やご要望がございましたら、ゲストサービスまでお気軽にお申し付けください。</div>
+          <div class="ex-cn">如有任何疑问或需求，请随时联系宾客服务部。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 4: 日语答题（分块练习）
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-jp-qa">
+  <div class="sec-title"><span class="ico">💬</span><h2>日语答题（分块练习）<span class="en">Japanese Q&amp;A · Chunked Practice</span></h2></div>
+
+  <div class="box tip">
+    <strong>🎯 分块练习方法</strong>
+    每个答案分成3-4个「块」，颜色不同。<strong>先只练第一块</strong>，熟了再加第二块，最后串起来整体练。不要一开始就背整段。
+  </div>
+
+  <!-- Q1 自我介绍 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">1</div>
+      <div>
+        <div class="q-title">日语自我介绍（必考！）</div>
+        <div class="q-sub">Please introduce yourself in Japanese.</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">日本語で自己紹介をしてください。</div>
+      <div class="box warn" style="font-size:.8rem;margin-bottom:12px">
+        <strong>✏️ 敬语使用原则（针对你的情况）</strong>
+        自我介绍不需要每句都用最高级敬语。用自然的です/ます就很好。只在「申します」「取得いたしました」「担当しています」这几个固定点用敬语就够了。说得流畅比说得过分正式更重要。
+      </div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text">はじめまして。<span class="key">黄明儀</span>と申します。中国の広東省出身で、大学は広州、今は<span class="key">深圳</span>に住んでいます。大学で日本語を専攻して、<span class="key">在学中にJLPT N1</span>を取得しました。</div>
+          <div class="cn-text">初次见面，我叫黄明儀。广东省人，大学在广州读，现住深圳。日语专业，<strong>在校期间就取得了JLPT N1</strong>（不是毕业后）。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②">
+          <div class="jp-text">今は深圳のIT会社で、<span class="key">日本語の翻訳とライティング</span>、そして<span class="key">グラフィックデザイン</span>を担当しています。具体的には、ゲームやAIツールのサイトコンテンツの翻訳、<span class="key">YouTubeチャンネルの動画制作とサムネイルのデザイン</span>、ブログ記事用の画像素材の制作などをしています。</div>
+          <div class="cn-text">负责日语翻译/文案和平面设计。具体包括：游戏/AI工具网站翻译、<strong>YouTube频道运营（视频制作+封面图）</strong>、博客文章图片素材制作。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③">
+          <div class="jp-text">一番印象に残っている仕事は、<span class="key">キャラクター百科のページテンプレート</span>のデザインです。資料集めからスタイル設計、コーディングまで一人で担当して、完成したテンプレートが<span class="key">英語チームにも採用</span>されました。</div>
+          <div class="cn-text">最难忘的工作是做角色百科页面的模板设计。从找参考资料、定样式，到自己写代码，全部一个人完成，最后这套模板被英语团队也采用了。</div>
+        </div>
+        <div class="chunk chunk-4" data-n="块④">
+          <div class="jp-text">プリンセス・クルーズに応募したのは、<span class="key">日本語とデザインの両方</span>を活かせるポジションだからです。多言語・多文化の環境で働くことに、すごく<span class="key">ワクワク</span>しています。よろしくお願いします。</div>
+          <div class="cn-text">申请公主邮轮是因为这个岗位可以同时用上日语和设计两方面技能。对多语言多文化的工作环境，我真的非常期待。请多关照。</div>
+        </div>
+      </div>
+      <div class="box green" style="font-size:.82rem">
+        <strong>✅ 必须说到的词</strong>：N1 / 翻訳 / グラフィックデザイン / Canva / キャラクター百科のテンプレート（英語チームに採用）<br>
+        <strong>⚠️ 关于Photoshop</strong>：如果问到，就说「Canvaがメインで、Photoshopも補助的に使います」，不要过度描述PS技能
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 繁忙时宾客来找 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">2</div>
+      <div>
+        <div class="q-title">繁忙时宾客来找你</div>
+        <div class="q-sub">A Japanese guest approaches while you are busy. How do you handle it?</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">お忙しいとき、日本語を話されるお客様がいらっしゃった場合、どのように対応されますか？</div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text">（お客様が来られた瞬間）<br><span class="key">「お客様、大変失礼いたしました。」</span></div>
+          <div class="cn-text">（宾客到来的瞬间）「非常抱歉打扰了您。」— 第一反应：立刻道歉</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②">
+          <div class="jp-text">「ただいま別の業務を対応中でございますが、<span class="key">すぐにご用件をお伺いいたします</span>。<span class="key">少々お時間をいただけますでしょうか</span>。」</div>
+          <div class="cn-text">「我正在处理其他事务，但会马上为您服务。能给我一点时间吗？」— 说明情况+争取时间</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③">
+          <div class="jp-text">（対応できる場合）「<span class="key">お待たせいたしました</span>。どのようなご用件でしょうか？」<br>（すぐに無理な場合）「誠に恐れ入りますが、<span class="key">担当のスタッフをすぐにご案内いたします</span>ので、少々お待ちいただけますでしょうか。」</div>
+          <div class="cn-text">能处理：「久等了，请问有什么需要？」/ 不能立刻处理：「非常抱歉，我立刻安排专职人员来帮您。」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 翻訳品質・校正 【JD核心要求】 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">3</div>
+      <div>
+        <div class="q-title">翻译质量 · 校对流程【JD核心考点】</div>
+        <div class="q-sub">How do you ensure quality in your translations? Describe your proofreading process.</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">翻訳のクオリティをどう確保していますか？校正はどんなふうにやっていますか？</div>
+      <div class="box warn" style="font-size:.8rem;margin-bottom:12px">
+        <strong>📌 为什么这题很重要</strong>：JD里三处提到proofreading/quality——「Excellent proofreading skills」「coordinates the proofreading process」「ensuring product quality standards are met or exceeded」。这是这个岗位的核心要求，不是加分题。
+      </div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①（原则）">
+          <div class="jp-text">「翻訳で一番大事にしているのは、<span class="key">原文の意図を理解すること</span>です。言葉をそのまま訳すんじゃなくて、読んだ人に何を伝えたいかを考えながら訳しています。」</div>
+          <div class="cn-text">「翻译最重要的是理解原文的意图，不是逐字翻译，而是思考想传达给读者什么。」</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②（流程）">
+          <div class="jp-text">「私の校正は3ステップです。まず意味で訳す。次に、日本語として自然に読めるかを確認する。最後に、<span class="key">関連するページ全体で用語が統一されているか</span>チェックします。」</div>
+          <div class="cn-text">「我的校对分3步：①按意思翻；②确认日语是否自然流畅；③跨页面统一术语一致性。」</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③（实际经验）">
+          <div class="jp-text">「今の仕事では、<span class="key">発行前の日本語校正を一人で担当</span>していました。20ページ以上のコンテンツをリリース前に全部チェックして、発行後に修正依頼がゼロだったこともあります。」</div>
+          <div class="cn-text">「现在的工作里，发布前的日语校对全部我一个人负责。20多页内容发布前全部核查，曾经做到发布后零修改要求。」</div>
+        </div>
+      </div>
+      <div class="box green" style="font-size:.8rem"><strong>✅ 关键词</strong>：意図を理解する / 3ステップ / 用語の統一 / 発行前の校正を一人で担当 / 修正依頼ゼロ</div>
+    </div>
+  </div>
+
+  <!-- Q4 帮助理解文件/通知 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">4</div>
+      <div>
+        <div class="q-title">协助宾客理解文件/通知 【设计/翻译岗核心】</div>
+        <div class="q-sub">A Japanese guest needs help understanding a document or announcement.</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">日本語を話されるお客様が船内の書類やお知らせの内容をご理解できない場合、どのように対応されますか？</div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text">「<span class="key">もちろんでございます</span>。どのような内容でご不明な点がおありでしょうか？」</div>
+          <div class="cn-text">「当然可以，哪里有不明白的地方呢？」— 立刻表示愿意帮忙</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②">
+          <div class="jp-text">（内容確認後）「こちらの内容は〜ということでございます。<span class="key">ご不明な点はございますか</span>？」</div>
+          <div class="cn-text">（确认内容后）「这里的意思是〜。还有不明白的地方吗？」— 用简单易懂的日语解释</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③">
+          <div class="jp-text">（翻訳が必要な書類の場合）「ただいまご確認いたしますので、少々お待ちいただけますでしょうか。<span class="key">正確にお伝えできるよう</span>、しっかり対応させていただきます。」</div>
+          <div class="cn-text">（需要翻译文件时）「我来确认一下，请稍等。我会确保准确地告诉您内容。」</div>
+        </div>
+      </div>
+      <div class="box info" style="font-size:.82rem"><strong>💡 这题是你的核心价值所在！</strong>强调「正確に」（准确地）体现翻译专业性</div>
+    </div>
+  </div>
+
+  <!-- Q5 设计/翻译工作经验 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">5</div>
+      <div>
+        <div class="q-title">描述你的设计/翻译经验</div>
+        <div class="q-sub">Please describe your graphic design or translation experience in Japanese.</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">グラフィックデザインや翻訳のご経験について、日本語でお聞かせください。</div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text">「今の仕事では、日本市場向けのサイトコンテンツの<span class="key">翻訳とグラフィックデザイン</span>を担当しています。英語から日本語への翻訳もあれば、日本語でゼロから書いたコンテンツもあります。発行前の<span class="key">日本語校正も一人で担当</span>していたので、正確さにはとても気を使っています。」</div>
+          <div class="cn-text">「负责翻译和平面设计。既有英译日，也有从零用日语写的内容。发布前日语校对也是我一人负责，对准确性非常在意。」</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②（核心故事）">
+          <div class="jp-text">「一番印象に残っているのは、<span class="key">ゲームのキャラクター百科のページテンプレート</span>のデザインです。参考資料を集めるところから始めて、レイアウトと配色を自分で決めて、最終的にコーディングまで完成させました。」</div>
+          <div class="cn-text">「最难忘的是游戏角色百科页面模板的设计。从找参考资料开始，自己定版面和配色，最后自己写代码把它实现出来。」</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③（结果）">
+          <div class="jp-text">「デザインのクオリティが評価されて、その<span class="key">テンプレートが英語チームにも採用</span>されました。自分が一から作ったものが複数言語版の基準になったのは、すごく嬉しかったです。」</div>
+          <div class="cn-text">「因为设计质量被认可，这套模板英语团队也用了。自己从头做的东西成为多语言版标准，非常有成就感。」</div>
+        </div>
+      </div>
+      <div class="box info" style="font-size:.8rem"><strong>💡 如被追问代码</strong>：「HTMLとCSSを使って、実際のページで見た目を確認しながらデザインしました」——说明你不只是静态设计，实际测试过效果。</div>
+    </div>
+  </div>
+
+  <!-- Q6 多任务压力 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">6</div>
+      <div>
+        <div class="q-title">多任务/紧截止日期经历</div>
+        <div class="q-sub">Describe a time managing multiple tasks with tight deadlines. (Answer in Japanese)</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-text">締め切りが重なる中で複数の業務を同時に管理した経験を日本語でお聞かせください。</div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①(情况)">
+          <div class="jp-text">「以前、<span class="key">複数のウェブサイトの日本語コンテンツ更新と動画制作が同時に進行</span>していた時期がありました。それぞれ締め切りが重なり、かなり厳しいスケジュールでした。」</div>
+          <div class="cn-text">【情况S】曾经有一段时间，多个网站日语内容更新和视频制作同时推进，截止日期重叠，日程非常紧张。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②(行动)">
+          <div class="jp-text">「その際は、まず<span class="key">タスクの優先順位を整理</span>し、翻訳・デザイン・動画編集の作業を時間帯別に分けてスケジュールを組みました。また、チームへの<span class="key">引き継ぎノート</span>を随時作成し、確認・承認のプロセスをスムーズにする工夫もしました。」</div>
+          <div class="cn-text">【行动A】整理任务优先级，按时间段分配翻译/设计/视频编辑工作；随时制作交接笔记，使审核流程顺畅。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③(结果)">
+          <div class="jp-text">「結果として、<span class="key">すべての締め切りを守ること</span>ができ、品質面でも問題なく完成させることができました。この経験から、<span class="key">計画性と優先順位の整理</span>が非常に重要だと学びました。」</div>
+          <div class="cn-text">【结果R】所有截止日期都按时完成，质量也没有问题。从中学到了计划性和优先级整理的重要性。</div>
+        </div>
+      </div>
+    </div>
+    <!-- Q7 Daily Program · 船上岗位专属 -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">7</div>
+      <div>
+        <div class="q-title">【船上专属】Daily Program 高压截止情景</div>
+        <div class="q-sub">How would you handle designing the Daily Program under a tight overnight deadline?</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="box warn" style="font-size:.8rem;margin-bottom:12px">
+        <strong>📌 什么是 Daily Program？</strong>
+        这是邮轮上<strong>每天最重要的设计任务</strong>。每晚把第二天所有活动、餐厅时间、港口信息排版印刷，趁客人睡觉前塞进每间舱房。通常要在几小时内完成，没有延期选项。这题直接考验你对这份工作真实压力的准备程度。
+      </div>
+      <div class="q-text">船上每天都需要在深夜制作好第二天的 Daily Program 并发到所有舱房。如果当天活动信息很晚才确认，你会怎么处理这个高压截止任务？</div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①（预防）">
+          <div class="jp-text">「まず、情報が遅れても対応できるように、<span class="key">再利用可能なテンプレート</span>を事前に準備しておきます。固定部分（ヘッダー、レイアウト、フォント）はあらかじめ完成させておいて、内容を入れ替えるだけで完成できる状態にしておきます。」</div>
+          <div class="cn-text">「提前准备好可复用的模板。把固定部分（页眉、排版、字体）都做好，信息来了只需要填内容，大幅缩短制作时间。」</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②（执行）">
+          <div class="jp-text">「情報が届いたら、<span class="key">優先順位の高いものから順番に</span>作業を進めます。内容を確認しながら迷わず進めるために、よく使う表現やフォーマットは手元にまとめておきます。完成したら必ず<span class="key">全体を見直して</span>から印刷します。」</div>
+          <div class="cn-text">「信息一到手就按优先级推进，不犹豫。常用表达和格式提前整理好放手边，做完必须整体检查一遍再印刷。」</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③（态度）">
+          <div class="jp-text">「今の仕事でも、翻訳・デザイン・校正を同時進行で対応してきたので、<span class="key">締め切りのプレッシャーには慣れています</span>。むしろ、毎日完成させるという達成感がモチベーションになると思います。」</div>
+          <div class="cn-text">「我现在的工作也是翻译、设计、校对同时推进，对截止日期压力已经习惯了。每天完成任务这种成就感反而会成为动力。」</div>
+        </div>
+      </div>
+      <div class="box green" style="font-size:.8rem"><strong>✅ 关键词</strong>：テンプレートを事前に準備 / 優先順位 / 締め切りに慣れている / 毎日達成感</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 5: 口译练习
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-translation">
+  <div class="sec-title"><span class="ico">🔤</span><h2>英日口译练习 <span class="en">English → Japanese Interpretation</span></h2></div>
+
+  <div class="box warn">
+    <strong>📌 根据小红书经验：会有一段英文让你口译成日语</strong>
+    主要是邮轮欢迎词/开演通知/服务类文本。重点：<strong>大声说出来</strong>，不要只在心里翻。
+  </div>
+  <div class="box tip">
+    <strong>💡 口译技巧</strong>
+    <ul>
+      <li>不要追求完美，意思对就行，不要因找词而长时间沉默</li>
+      <li>「ladies and gentlemen」→「皆様」或「お客様」均可</li>
+      <li>「feel free to」→「お気軽に〜ください」</li>
+      <li>「we hope you enjoy」→「ごゆっくりお楽しみください」</li>
+      <li>数字/时间直接日语读出：7:00 AM → 午前7時、5 minutes → 5分</li>
+    </ul>
+  </div>
+
+  <div class="trans-card">
+    <div class="trans-head">练习 1 · 登船欢迎词 Welcome Aboard</div>
+    <div class="trans-body">
+      <div class="original">"Good evening, ladies and gentlemen. Welcome aboard the Grand Princess. We are delighted to have you with us this evening and hope you enjoy your voyage. Please take a moment to review the safety information in your cabin, and feel free to contact our Guest Services team if you need any assistance."</div>
+      <div class="key-phrases">
+        <div class="kp-title">⚡ 关键词预习</div>
+        <div class="kp-grid">
+          <div class="kp-item">ご乗船いただきありがとうございます<span class="kp-en">welcome aboard</span></div>
+          <div class="kp-item">乗務員一同<span class="kp-en">all of our crew</span></div>
+          <div class="kp-item">素晴らしい航海<span class="kp-en">wonderful voyage</span></div>
+          <div class="kp-item">安全に関するご案内<span class="kp-en">safety information</span></div>
+          <div class="kp-item">お気軽にお申し付けください<span class="kp-en">feel free to contact</span></div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleTrans('t1')">👆 点击显示参考日语译文</button>
+      <div id="t1" class="translation hidden">「みなさま、こんばんは。グランド・プリンセス号へようこそお越しくださいました。乗務員一同、皆様をお迎えできますことを、心より歓迎申し上げます。どうぞ素晴らしい航海をお楽しみください。お部屋の安全に関するご案内を、ぜひご一読いただきますようお願い申し上げます。また、何かご不明な点やご要望がございましたら、ゲストサービスまでお気軽にお申し付けください。」</div>
+    </div>
+  </div>
+
+  <div class="trans-card">
+    <div class="trans-head">练习 2 · 开演前通知 Pre-Show Announcement</div>
+    <div class="trans-body">
+      <div class="original">"Ladies and gentlemen, the show will begin in approximately five minutes. Please turn off your mobile phones and refrain from taking photographs or videos during the performance. We hope you enjoy tonight's show."</div>
+      <div class="key-phrases">
+        <div class="kp-title">⚡ 关键词预习</div>
+        <div class="kp-grid">
+          <div class="kp-item">まもなく約5分後に<span class="kp-en">in approximately five minutes</span></div>
+          <div class="kp-item">電源をお切りください<span class="kp-en">turn off your phone</span></div>
+          <div class="kp-item">撮影はご遠慮ください<span class="kp-en">refrain from photographs</span></div>
+          <div class="kp-item">公演中<span class="kp-en">during the performance</span></div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleTrans('t2')">👆 点击显示参考日语译文</button>
+      <div id="t2" class="translation hidden">「お客様にお知らせいたします。まもなく約5分後にショーが始まります。携帯電話の電源はお切りいただきますようお願い申し上げます。また、公演中の写真・動画撮影はご遠慮ください。どうぞ本日のショーをごゆっくりお楽しみください。」</div>
+    </div>
+  </div>
+
+  <div class="trans-card">
+    <div class="trans-head">练习 3 · 餐厅开放通知 Dining Announcement</div>
+    <div class="trans-body">
+      <div class="original">"Good morning, guests. The main dining room is now open for breakfast from 7:00 AM to 9:30 AM. Today's featured dishes include a variety of fresh local specialties. We look forward to welcoming you."</div>
+      <div class="key-phrases">
+        <div class="kp-title">⚡ 关键词预习</div>
+        <div class="kp-grid">
+          <div class="kp-item">朝食をご用意しております<span class="kp-en">open for breakfast</span></div>
+          <div class="kp-item">本日のおすすめ<span class="kp-en">today's featured dishes</span></div>
+          <div class="kp-item">地元食材<span class="kp-en">local specialties</span></div>
+          <div class="kp-item">ご来店をお待ちしております<span class="kp-en">look forward to welcoming</span></div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleTrans('t3')">👆 点击显示参考日语译文</button>
+      <div id="t3" class="translation hidden">「お客様、おはようございます。メインダイニングでは、午前7時から9時30分まで朝食をご用意しております。本日のおすすめは、新鮮な地元食材を使ったさまざまな料理でございます。皆様のご来店を心よりお待ち申し上げております。」</div>
+    </div>
+  </div>
+
+  <div class="trans-card">
+    <div class="trans-head">练习 4 · 紧急安全通知 Safety Announcement</div>
+    <div class="trans-body">
+      <div class="original">"Attention all guests: in the event of an emergency, please remain calm and proceed to your muster station as indicated on your cabin door. Life jackets are located in your cabin closet. Our crew is trained to assist you."</div>
+      <div class="key-phrases">
+        <div class="kp-title">⚡ 关键词预习</div>
+        <div class="kp-grid">
+          <div class="kp-item">緊急の場合<span class="kp-en">in the event of an emergency</span></div>
+          <div class="kp-item">落ち着いて行動<span class="kp-en">remain calm</span></div>
+          <div class="kp-item">集合場所<span class="kp-en">muster station</span></div>
+          <div class="kp-item">救命胴衣<span class="kp-en">life jacket</span></div>
+          <div class="kp-item">クローゼット内<span class="kp-en">in your closet</span></div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleTrans('t4')">👆 点击显示参考日语译文</button>
+      <div id="t4" class="translation hidden">「お客様にご案内申し上げます。緊急の場合は、どうか落ち着いて行動していただき、お部屋のドアに表示されている集合場所へお進みください。救命胴衣はお部屋のクローゼット内に備えております。乗務員がご案内いたしますので、どうかご安心ください。」</div>
+    </div>
+  </div>
+
+  <div class="trans-card">
+    <div class="trans-head">练习 5 · 港口到达通知 Port Arrival</div>
+    <div class="trans-body">
+      <div class="original">"Good morning. We will be arriving at the port of Yokohama at 8:00 AM tomorrow. Shore excursion tickets are available at the Guest Services desk on Deck 5. Please ensure you return to the ship no later than 5:00 PM."</div>
+      <div class="key-phrases">
+        <div class="kp-title">⚡ 关键词预习</div>
+        <div class="kp-grid">
+          <div class="kp-item">〜港に到着いたします<span class="kp-en">will arrive at the port of</span></div>
+          <div class="kp-item">陸上観光チケット<span class="kp-en">shore excursion tickets</span></div>
+          <div class="kp-item">〜デッキのゲストサービス<span class="kp-en">Guest Services on Deck X</span></div>
+          <div class="kp-item">〜時までにご乗船ください<span class="kp-en">return to the ship by</span></div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleTrans('t5')">👆 点击显示参考日语译文</button>
+      <div id="t5" class="translation hidden">「おはようございます。明日の午前8時に横浜港に入港いたします。陸上観光ツアーのチケットは、5デッキのゲストサービスカウンターにてお求めいただけます。なお、午後5時までに必ずご乗船くださいますようお願い申し上げます。」</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 6: 英语答题
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-en-qa">
+  <div class="sec-title"><span class="ico">🇬🇧</span><h2>英语问题答题 <span class="en">English Q&amp;A</span></h2></div>
+
+  <div class="box info">
+    <strong>📌 英语部分通常是后3-4题</strong>
+    不需要追求完美口音，清晰表达最重要。每个答案同样分块练习，每块2-3句话。
+  </div>
+
+  <!-- E1 Why Princess Cruises -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E1</div>
+      <div>
+        <div class="q-title">Why do you want to work for Princess Cruises?</div>
+        <div class="q-sub">必考题！两次面试都问到了 · 用你的真实故事</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="box tip" style="font-size:.8rem;margin-bottom:12px">
+        <strong>🌟 这道题用你的真实故事——南非爷爷</strong>
+        这个故事比任何简历语言都有力。它具体、真实、有画面感，直接说明了你为什么相信语言能连接人，为什么向往多文化环境。面试官会记住它。
+      </div>
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①（个人故事·开场）">
+          <div class="jp-text" style="color:var(--text)">There's a moment I keep coming back to. I was on a long bus trip, and I started chatting with the man sitting next to me — he looked like a typical older Chinese man. But it turned out <span class="key">he was from South Africa</span>, coming back to his hometown after several decades away. His mother tongue was French. My English wasn't great at the time, and neither was his.</div>
+          <div class="cn-text">在一次长途乘车中，我和旁边的大爷聊了起来。看起来是普通的中国老人，但他其实来自南非，相隔几十年才回家乡，母语是法语。我们英语都不太好。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②（故事高潮）">
+          <div class="jp-text" style="color:var(--text)">But somehow, between broken words, gestures, and a shared curiosity — <span class="key">we talked for hours</span>. He told me about Réunion Island, a place I'd never heard of, and showed me photos from parties there. That conversation was a window into a world I didn't know existed. It made me feel that <span class="key">language — and people — are endlessly surprising</span>.</div>
+          <div class="cn-text">但就这样，用断断续续的词和手势，我们聊了一路。他跟我讲了留尼汪小岛，给我看他参加派对的照片。那次对话让我看到了一个我不知道存在的世界，让我觉得语言和人都是无穷无尽的惊喜。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③（连接到邮轮）">
+          <div class="jp-text" style="color:var(--text)">A cruise ship feels like that bus journey, <span class="key">but on a much bigger scale</span>. People from completely different worlds, briefly sharing a space. And this role — designing daily programs, translating for Japanese-speaking guests, creating visuals that make people feel welcome — is exactly how I want to be part of that. Princess Cruises gave me the chance to do it with one of the best names in the industry.</div>
+          <div class="cn-text">邮轮就像那辆长途汽车，只是规模大得多。来自完全不同世界的人，暂时共享一个空间。而这份工作——设计行程、为日语宾客翻译、做让人有宾至如归感的视觉——就是我想参与其中的方式。公主邮轮让我能在行业最好的平台上实现这一切。</div>
+        </div>
+        <div class="chunk chunk-4" data-n="块④（能力匹配·收尾）">
+          <div class="jp-text" style="color:var(--text)">And practically speaking, <span class="key">my background lines up directly with what this role needs</span>: JLPT N1, over a year of Japanese translation and graphic design experience working simultaneously, and a genuine comfort with multilingual, multicultural environments.</div>
+          <div class="cn-text">实际层面，我的背景和岗位需求高度吻合：JLPT N1、一年多同时做日语翻译和平面设计的经验，以及对多语言多文化环境发自内心的适应感。</div>
+        </div>
+      </div>
+      <div class="box green" style="font-size:.8rem"><strong>✅ 练习建议</strong>：块①②是故事，可以用自己的语言讲，不用逐字背。块③④是逻辑收尾，要准确说到。整体控制在90秒内。</div>
+    </div>
+  </div>
+
+  <!-- E2 Availability -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E2</div>
+      <div>
+        <div class="q-title">What is the earliest date you can join / board a ship?</div>
+        <div class="q-sub">硬性问题，如实说——你的答案是约2个月</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="完整答案">
+          <div class="jp-text" style="color:var(--text)">I'm currently employed, so I'd need to give <span class="key">one month's notice</span> to my employer. Beyond that, there's some necessary preparation on my side — in China, working on a cruise ship requires obtaining a <span class="key">Seafarer's Book</span> and completing the relevant documentation, which typically takes around another month.<br><br>So realistically, I'd be ready to board within <span class="key">approximately two months</span> of receiving an offer. I've already researched the process and I'm prepared to start those steps as soon as I get the green light.</div>
+          <div class="cn-text">现在有工作，需要提前一个月通知。另外在中国，在邮轮工作需要办理<strong>海员证</strong>和相关文件手续，这大约也需要一个月时间。所以收到offer后约<strong>两个月</strong>可以上船。我已经了解了具体流程，拿到offer就可以立刻开始办。</div>
+        </div>
+      </div>
+      <div class="box info" style="font-size:.8rem">
+        <strong>💡 为什么主动说海员证是加分的</strong>：大多数应聘者不知道要办，你主动说出来说明你认真做过功课，对这份工作是真心想要的，不是随便投的。
+      </div>
+    </div>
+  </div>
+
+  <!-- E3 Challenging project -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E3</div>
+      <div>
+        <div class="q-title">Tell me about a challenging translation or design project.</div>
+        <div class="q-sub">用STAR法则 · 角色百科模板是你最强的故事</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="S·情况">
+          <div class="jp-text" style="color:var(--text)"><strong>Situation:</strong> I was asked to design a <span class="key">character encyclopedia page for a Japanese gaming platform</span> — a single page layout that would become the visual template for every character in the encyclopedia. There was no existing reference or standard. I had to create it from scratch.</div>
+          <div class="cn-text">【S】被要求为日语游戏平台设计角色百科页面——这个版面会成为所有角色页的模板标准。没有任何现有参考，需要从零开始。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="T·挑战">
+          <div class="jp-text" style="color:var(--text)"><strong>Task:</strong> The challenge wasn't just aesthetics — the template needed to be <span class="key">flexible enough to work for many different characters</span> with varying amounts of text and different visual styles, while still looking consistent and polished.</div>
+          <div class="cn-text">【T】挑战不只是好看——模板需要足够灵活，能适配不同字数、不同视觉风格的角色，同时保持整体统一感。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="A·行动">
+          <div class="jp-text" style="color:var(--text)"><strong>Action:</strong> I researched character encyclopedia pages from other games to understand what worked. Then I <span class="key">defined the layout system, color palette, and typography myself</span>. To make sure the design held up in practice, I went one step further — I built a working version in <span class="key">HTML and CSS</span>, so I could actually test how different character data looked in the real template, not just in a mockup.</div>
+          <div class="cn-text">【A】研究了其他游戏的角色百科页面，了解什么有效。然后自己定版面、配色和字体。为了确认设计在实际中没问题，我进一步用HTML和CSS做了一个可运行的版本——这样能测试不同角色数据在真实模板里的效果，而不只是静态设计稿。</div>
+        </div>
+        <div class="chunk chunk-4" data-n="R·结果">
+          <div class="jp-text" style="color:var(--text)"><strong>Result:</strong> The template was recognized for its quality and <span class="key">adopted directly by the English-language team</span> as well — it became the production standard across languages. Knowing that something I built entirely from scratch became the foundation for an entire product section was genuinely satisfying.</div>
+          <div class="cn-text">【R】模板因质量被认可，英语团队也直接采用了，成为跨语言的制作标准。从零开始做的东西成为整个产品板块的基础，这种成就感是真实的。</div>
+        </div>
+      </div>
+      <div class="box green" style="font-size:.8rem"><strong>✅ 这个故事同时展示了</strong>：主动性（没有参考从零开始）/ 技术深度（不只是设计稿，还写了代码验证）/ 跨团队影响力（英语团队也采用了）</div>
+    </div>
+  </div>
+
+  <!-- E4 Translation quality -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E4</div>
+      <div>
+        <div class="q-title">How do you ensure accuracy and quality in your translations?</div>
+        <div class="q-sub">体现专业流程意识</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①(原则)">
+          <div class="jp-text" style="color:var(--text)">Accuracy starts with understanding the <span class="key">intent behind the original text</span>, not just the literal words. I always ask: what is this trying to communicate, and how would a native Japanese speaker naturally express this?</div>
+          <div class="cn-text">准确性从理解原文意图开始，不只是字面意思。我总是问：这想传达什么，母语者会怎么自然表达？</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②(流程)">
+          <div class="jp-text" style="color:var(--text)">My process has <span class="key">three steps</span>: first, translate focusing on meaning; second, review purely for grammar and natural expression as if reading fresh; third, do a consistency check across all related pages to unify terminology.</div>
+          <div class="cn-text">我的流程有三步：①按意思翻译；②像第一次读一样检查语法和自然度；③跨页面一致性检查，统一术语。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③(实际经验)">
+          <div class="jp-text" style="color:var(--text)">In my current role, I'm the <span class="key">sole Japanese reviewer before every publish</span>, which means I hold myself to a very high standard. I've also found that building <span class="key">glossaries and style references</span> for recurring content significantly reduces errors over time.</div>
+          <div class="cn-text">我是每次发布前唯一的日语审核，标准非常高。我发现为常见内容建立词汇表和风格参考，长期来说能显著减少错误。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E5 Multicultural team -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E5</div>
+      <div>
+        <div class="q-title">How do you handle working in a multicultural, multilingual team?</div>
+        <div class="q-sub">展示多语言优势</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text" style="color:var(--text)">Multicultural teams are something I <span class="key">genuinely thrive in</span>. In my current role, I regularly bridge communication between Chinese-speaking colleagues and Japanese-language content requirements, working with materials originally produced in English.</div>
+          <div class="cn-text">我在多元文化团队中如鱼得水。我现在的工作就是在中文同事和日语内容需求之间架桥，同时处理英文原材料。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②">
+          <div class="jp-text" style="color:var(--text)">The key to working across cultures is <span class="key">clarity and respect</span> — being precise in what you communicate, being open to different working styles, and never assuming everyone interprets things the same way. When in doubt, I ask rather than guess.</div>
+          <div class="cn-text">跨文化合作的关键是清晰和尊重——精准表达、接受不同工作方式、不假设大家理解方式相同。有疑问时我会问，不猜测。</div>
+        </div>
+        <div class="chunk chunk-3" data-n="块③">
+          <div class="jp-text" style="color:var(--text)">I naturally <span class="key">code-switch between Mandarin, Cantonese, English, and Japanese</span> depending on context. I see this not just as a communication tool but as a cultural bridge — and that's something I'm genuinely proud of.</div>
+          <div class="cn-text">我能自然地在普通话、粤语、英语和日语之间切换。我把这不仅视为沟通工具，更是文化桥梁——这是我真正引以为豪的。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E6 Ship life -->
+  <div class="q-card">
+    <div class="q-head">
+      <div class="q-num">E6</div>
+      <div>
+        <div class="q-title">Are you comfortable living and working on a ship for an extended period?</div>
+        <div class="q-sub">展示适应力和积极态度</div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="chunks">
+        <div class="chunk chunk-1" data-n="块①">
+          <div class="jp-text" style="color:var(--text)">Yes, absolutely. I've <span class="key">thought carefully about this</span> before applying, and I'm genuinely excited about it rather than apprehensive. Working in an international environment, meeting guests from all over the world, and experiencing different destinations <span class="key">aligns with my values</span> around growth and cross-cultural experience.</div>
+          <div class="cn-text">是的，完全可以。我在申请前认真考虑过这一点，我是真的对此感到兴奋而不是担心。国际环境、来自世界各地的宾客和不同的目的地，与我对成长和跨文化体验的价值观完全一致。</div>
+        </div>
+        <div class="chunk chunk-2" data-n="块②">
+          <div class="jp-text" style="color:var(--text)">I'm adaptable, I work well <span class="key">independently and as part of a team</span>, and I'm comfortable with structured routines. I understand ship life requires flexibility, patience, and a positive attitude — and I believe those are qualities I've demonstrated in my current role <span class="key">managing multiple concurrent projects under deadline pressure</span>.</div>
+          <div class="cn-text">我适应力强，既能独立工作也能融入团队，对结构化作息也没问题。我理解船上生活需要灵活、耐心和积极态度——这些都是我在同时管理多项目、应对截止日期压力时已经展示过的品质。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 7: 英语词汇
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-vocab-en">
+  <div class="sec-title"><span class="ico">📖</span><h2>英语关键词汇 <span class="en">English Vocabulary</span></h2></div>
+
+  <div class="box green">
+    <strong>📚 重点关注：岗位描述用词 + 面试高频词</strong>
+    这些词出现在你的答案里，要听懂也要能说出来。
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--en);margin-bottom:12px"><span class="ico">💼</span><h2 style="font-size:.95rem">岗位相关专业词汇</h2></div>
+    <table class="en-vocab-table">
+      <thead><tr><th>英语单词/短语</th><th>中文意思</th><th>在面试中的用法</th></tr></thead>
+      <tbody>
+        <tr><td><span class="en-word">graphic designer</span><span class="en-pron">/ˈɡræfɪk dɪˈzaɪnər/</span></td><td>平面设计师</td><td>职位名称，直接说</td></tr>
+        <tr><td><span class="en-word">translator</span><span class="en-pron">/trænsˈleɪtər/</span></td><td>翻译</td><td>"I work as a translator..."</td></tr>
+        <tr><td><span class="en-word">localization</span><span class="en-pron">/ˌloʊkələˈzeɪʃən/</span></td><td>本地化（比translation更专业）</td><td>"Japanese localization for websites"</td></tr>
+        <tr><td><span class="en-word">copywriting</span><span class="en-pron">/ˈkɒpiˌraɪtɪŋ/</span></td><td>文案写作</td><td>"I do Japanese copywriting"</td></tr>
+        <tr><td><span class="en-word">layout</span><span class="en-pron">/ˈleɪaʊt/</span></td><td>版面设计/排版</td><td>"page layout and design"</td></tr>
+        <tr><td><span class="en-word">template</span><span class="en-pron">/ˈtemplɪt/</span></td><td>模板</td><td>"I built reusable templates"</td></tr>
+        <tr><td><span class="en-word">thumbnail</span><span class="en-pron">/ˈθʌmneɪl/</span></td><td>缩略图/封面图</td><td>"video thumbnails and covers"</td></tr>
+        <tr><td><span class="en-word">simultaneously</span><span class="en-pron">/ˌsɪməlˈteɪniəsli/</span></td><td>同时地</td><td>"managing multiple tasks simultaneously"</td></tr>
+        <tr><td><span class="en-word">consistently</span><span class="en-pron">/kənˈsɪstəntli/</span></td><td>一贯地/始终</td><td>"consistently meeting deadlines"</td></tr>
+        <tr><td><span class="en-word">proficiency / fluency</span><span class="en-pron">/prəˈfɪʃənsi/ /ˈfluːənsi/</span></td><td>熟练度 / 流利度</td><td>"Japanese language proficiency"</td></tr>
+        <tr><td><span class="en-word">attention to detail</span></td><td>注重细节</td><td>必用短语，多说几遍</td></tr>
+        <tr><td><span class="en-word">deadline</span><span class="en-pron">/ˈdedlaɪn/</span></td><td>截止日期</td><td>"meeting tight deadlines"</td></tr>
+        <tr><td><span class="en-word">concurrent / concurrently</span><span class="en-pron">/kənˈkɜːrənt/</span></td><td>同时进行的</td><td>"concurrent projects"</td></tr>
+        <tr><td><span class="en-word">visual identity</span></td><td>视觉形象统一性</td><td>"maintaining a consistent visual identity"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--en);margin-bottom:12px"><span class="ico">🚢</span><h2 style="font-size:.95rem">邮轮行业词汇</h2></div>
+    <table class="en-vocab-table">
+      <thead><tr><th>英语单词/短语</th><th>中文意思</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="en-word">embark / disembark</span><span class="en-pron">/ɪmˈbɑːrk/</span></td><td>登船 / 下船</td><td>"embarkation day" 登船日</td></tr>
+        <tr><td><span class="en-word">onboard</span></td><td>在船上</td><td>"onboard experience" 船上体验</td></tr>
+        <tr><td><span class="en-word">muster station</span><span class="en-pron">/ˈmʌstər/</span></td><td>紧急集合站</td><td>安全通知中常出现</td></tr>
+        <tr><td><span class="en-word">shore excursion</span><span class="en-pron">/ʃɔːr ɪkˈskɜːrʒən/</span></td><td>岸上观光/港口游</td><td>邮轮特有词汇</td></tr>
+        <tr><td><span class="en-word">itinerary</span><span class="en-pron">/aɪˈtɪnəreri/</span></td><td>行程/航线计划</td><td>"cruise itinerary" 邮轮行程</td></tr>
+        <tr><td><span class="en-word">port of call</span></td><td>停靠港口</td><td>"We will arrive at our next port of call"</td></tr>
+        <tr><td><span class="en-word">Guest Services</span></td><td>宾客服务部</td><td>船上的前台/服务台</td></tr>
+        <tr><td><span class="en-word">hospitality</span><span class="en-pron">/ˌhɒspɪˈtæləti/</span></td><td>待客之道/款待</td><td>"world-class hospitality"</td></tr>
+        <tr><td><span class="en-word">multicultural</span></td><td>多元文化的</td><td>"multicultural team environment"</td></tr>
+        <tr><td><span class="en-word">seafarer / crew member</span></td><td>海员/船员</td><td>船上员工的统称</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="sec-title" style="border-color:var(--en);margin-bottom:12px"><span class="ico">🆘</span><h2 style="font-size:.95rem">英语卡壳急救短语</h2></div>
+    <div class="rescue-grid">
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">That's a great question. Let me think for a moment.</div>
+        <div class="r-cn">好问题，让我想一想。（争取1-2秒）</div>
+      </div>
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">What I mean to say is...</div>
+        <div class="r-cn">我想说的是……（换种方式重新表达）</div>
+      </div>
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">To put it another way...</div>
+        <div class="r-cn">换句话说……（换个角度解释）</div>
+      </div>
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">For example, in my current role...</div>
+        <div class="r-cn">比如，在我现在的工作中……（举例跳出卡壳）</div>
+      </div>
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">I believe the key point here is...</div>
+        <div class="r-cn">我认为关键在于……（抓住核心重新组织）</div>
+      </div>
+      <div class="rescue-item" style="background:var(--en-bg);border-color:var(--en)">
+        <div class="r-jp" style="color:var(--en)">Does that make sense? / If I understand correctly...</div>
+        <div class="r-cn">这样说清楚了吗？/ 如果我理解正确的话……</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 8: CHECKLIST
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-checklist">
+  <div class="sec-title"><span class="ico">✅</span><h2>备考清单 <span class="en">Pre-Interview Checklist</span></h2></div>
+
+  <div class="card">
+    <p style="font-weight:700;color:var(--navy);margin-bottom:12px">📅 面试前 2-3 天</p>
+    <ul class="cl-list">
+      <li class="cl-item"><input type="checkbox" id="c1" onchange="toggleDone(this)"><label for="c1">浏览「日语词汇」标签，把不熟的词大声读5遍</label></li>
+      <li class="cl-item"><input type="checkbox" id="c2" onchange="toggleDone(this)"><label for="c2">练习「句型模板」，把10个模板都大声说一遍</label></li>
+      <li class="cl-item"><input type="checkbox" id="c3" onchange="toggleDone(this)"><label for="c3">练习Q1日语自我介绍：先练块①，熟了加块②，再加③④</label></li>
+      <li class="cl-item"><input type="checkbox" id="c4" onchange="toggleDone(this)"><label for="c4">把「卡壳急救短语」（日语6条+英语6条）记住</label></li>
+      <li class="cl-item"><input type="checkbox" id="c5" onchange="toggleDone(this)"><label for="c5">浏览英语词汇表，确认每个词听到能反应过来</label></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p style="font-weight:700;color:var(--navy);margin-bottom:12px">📅 面试前 1 天</p>
+    <ul class="cl-list">
+      <li class="cl-item"><input type="checkbox" id="c6" onchange="toggleDone(this)"><label for="c6">日语Q1-Q6全部过一遍，不看稿子说出关键点</label></li>
+      <li class="cl-item"><input type="checkbox" id="c7" onchange="toggleDone(this)"><label for="c7">口译练习1-5，点开原文大声练习，再看译文对照</label></li>
+      <li class="cl-item"><input type="checkbox" id="c8" onchange="toggleDone(this)"><label for="c8">英语E1「Why Princess Cruises」背熟要点（必考！）</label></li>
+      <li class="cl-item"><input type="checkbox" id="c9" onchange="toggleDone(this)"><label for="c9">确定E2「可以上船的最早时间」，填入具体日期</label></li>
+      <li class="cl-item"><input type="checkbox" id="c10" onchange="toggleDone(this)"><label for="c10">对着摄像头做一次完整模拟，练习眼神和语速</label></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p style="font-weight:700;color:var(--navy);margin-bottom:12px">🕐 面试当天</p>
+    <ul class="cl-list">
+      <li class="cl-item"><input type="checkbox" id="c11" onchange="toggleDone(this)"><label for="c11">用 Chrome 浏览器（iPhone用Safari）打开链接</label></li>
+      <li class="cl-item"><input type="checkbox" id="c12" onchange="toggleDone(this)"><label for="c12">测试摄像头和麦克风是否正常</label></li>
+      <li class="cl-item"><input type="checkbox" id="c13" onchange="toggleDone(this)"><label for="c13">确认环境安静、光线充足、背景整洁</label></li>
+      <li class="cl-item"><input type="checkbox" id="c14" onchange="toggleDone(this)"><label for="c14">确保网络稳定（强WiFi或有线网络）</label></li>
+      <li class="cl-item"><input type="checkbox" id="c15" onchange="toggleDone(this)"><label for="c15">穿着整洁（上半身），坐姿端正</label></li>
+      <li class="cl-item"><input type="checkbox" id="c16" onchange="toggleDone(this)"><label for="c16">手机完全移出桌面视野，桌面清空</label></li>
+      <li class="cl-item"><input type="checkbox" id="c17" onchange="toggleDone(this)"><label for="c17">提前15分钟进入链接做最后准备</label></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p style="font-weight:700;color:var(--navy);margin-bottom:12px">🎯 作答时</p>
+    <ul class="cl-list">
+      <li class="cl-item"><input type="checkbox" id="c18" onchange="toggleDone(this)"><label for="c18">每题开始前深呼吸一次，不慌张</label></li>
+      <li class="cl-item"><input type="checkbox" id="c19" onchange="toggleDone(this)"><label for="c19">视线对准摄像头（不是看屏幕上的自己）</label></li>
+      <li class="cl-item"><input type="checkbox" id="c20" onchange="toggleDone(this)"><label for="c20">日语答题时主动提及「JLPT N1」</label></li>
+      <li class="cl-item"><input type="checkbox" id="c21" onchange="toggleDone(this)"><label for="c21">卡壳时用急救短语争取时间，不要沉默超过3秒</label></li>
+      <li class="cl-item"><input type="checkbox" id="c22" onchange="toggleDone(this)"><label for="c22">重录机会不用惋惜，第二次发挥好才是重点</label></li>
+      <li class="cl-item"><input type="checkbox" id="c23" onchange="toggleDone(this)"><label for="c23">保持微笑，语速适中，表现真实自信</label></li>
+    </ul>
+  </div>
+
+  <div class="box tip">
+    <strong>🌟 最后的话</strong>
+    你有 JLPT N1 + 实际翻译经验 + 设计经验，三者兼备在这个岗位上非常稀缺。你不是在争取一个够不到的机会——你是在展示你已经具备的能力。放松，真实，流畅，就是最好的表现。<br><br>
+    <strong>加油！🚢</strong>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 9: 模拟面试
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-sim">
+  <div class="sec-title"><span class="ico">🎬</span><h2>模拟面试 <span class="en">Full Interview Simulation</span></h2></div>
+
+  <div class="box red" style="margin-bottom:16px">
+    <strong>⚡ 注意：72小时截止！请尽快完成Hireflix录像</strong>
+    邀请邮件发出于6月9日，截止约6月12日。建议今晚或明天完成，状态好的时候做。
+  </div>
+
+  <div class="box tip">
+    <strong>🎯 如何使用这个模拟面试</strong>
+    <ul>
+      <li>按照Q1→Q11顺序，<strong>真实模拟Hireflix录像环境</strong>：对着摄像头说，不看稿子</li>
+      <li>先想30秒，再点「显示答案」对照——不要先看答案再说</li>
+      <li>下方圆点可以跳转到任何一题，做完变绿色</li>
+      <li>建议练习顺序：先练Q1日语自介 × 3遍，再按顺序过一遍，最后一遍完整不停顿</li>
+    </ul>
+  </div>
+
+  <!-- 进度点 -->
+  <div class="sim-dots" id="simDots">
+    <div class="sim-dot active" onclick="goSim(1)" id="dot1">1</div>
+    <div class="sim-dot" onclick="goSim(2)" id="dot2">2</div>
+    <div class="sim-dot" onclick="goSim(3)" id="dot3">3</div>
+    <div class="sim-dot" onclick="goSim(4)" id="dot4">4</div>
+    <div class="sim-dot" onclick="goSim(5)" id="dot5">5</div>
+    <div class="sim-dot" onclick="goSim(6)" id="dot6">6</div>
+    <div class="sim-dot" onclick="goSim(7)" id="dot7">7</div>
+    <div class="sim-dot" onclick="goSim(8)" id="dot8">8</div>
+    <div class="sim-dot" onclick="goSim(9)" id="dot9">9</div>
+    <div class="sim-dot" onclick="goSim(10)" id="dot10">10</div>
+    <div class="sim-dot" onclick="goSim(11)" id="dot11">11</div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="sim-progress">
+    <div>
+      <div class="sp-text" id="simProgressText">第 1 题 / 共 11 题</div>
+      <div class="sp-sub" id="simProgressSub">日语回答 · 建议约60秒</div>
+    </div>
+    <div class="sim-nav">
+      <button class="sim-nav-btn" onclick="prevSim()">← 上一题</button>
+      <button class="sim-nav-btn primary" onclick="nextSim()">下一题 →</button>
+    </div>
+  </div>
+
+  <!-- ── Q1 日语自我介绍 ── -->
+  <div class="sim-card active" id="sim1">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q1 · 必考 · 最重要</div>
+      <div class="sim-qtext">日本語で自己紹介をしてください。</div>
+      <div class="sim-qtext-en">Please introduce yourself in Japanese.</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>30秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约75秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa1',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa1" class="sim-answer">
+        <div class="sim-ans-jp">
+          はじめまして。<span class="key">黄明儀</span>と申します。中国の広東省出身で、今は深圳に住んでいます。<br><br>
+          大学で日本語を専攻して、<span class="key">在学中にJLPT N1</span>を取得しました。日本語での読み書きと会話は問題ありません。英語も仕事で使っていて、中国語は普通話と広東語がネイティブレベルです。<br><br>
+          今の仕事では、日本市場向けのサイトコンテンツの<span class="key">翻訳とグラフィックデザイン</span>を担当しています。具体的には、<span class="key">YouTubeチャンネルの動画制作とサムネイルのデザイン</span>、ブログ記事用の画像素材の制作、そして英語から日本語へのコンテンツ翻訳をしています。<br><br>
+          一番印象に残っているのは、<span class="key">ゲームのキャラクター百科のテンプレート</span>を一から作って、それが英語チームにも採用されたことです。<br><br>
+          プリンセス・クルーズでは、翻訳とデザインの両方を活かして貢献できることを楽しみにしています。よろしくお願いします。
+        </div>
+        <div class="sim-cn">在校期间取得N1（不是毕业后）/ 负责翻译+YouTube视频制作+封面图+博客图片素材 / 角色百科模板被英语团队采用。</div>
+        <div class="sim-tip">⚡ 关键修正：<strong>在学中にN1取得</strong>（不是卒業後）/ 加上YouTube动画・サムネイル</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q2 设计/翻译经验 ── -->
+  <div class="sim-card" id="sim2">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q2</div>
+      <div class="sim-qtext">翻訳やデザインのお仕事について、もう少し詳しく教えていただけますか？</div>
+      <div class="sim-qtext-en">Can you tell us more about your translation and design experience?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约60秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa2',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa2" class="sim-answer">
+        <div class="sim-ans-jp">
+          今の仕事では、ゲームやAIツールのサイト向けに<span class="key">英語から日本語への翻訳</span>をしています。ただ訳すだけじゃなくて、日本語として自然に読めるかどうか、すごく気にしています。<br><br>
+          デザインの方は、<span class="key">YouTubeのサムネイルや動画制作</span>、ブログ記事用の画像素材、ページレイアウトなどを担当していて、Canvaがメインです。<br><br>
+          特に印象に残っているのは、<span class="key">ゲームのキャラクター百科のテンプレート</span>を参考資料集めからデザイン、コーディングまで全部一人でやって、英語チームにも採用されたことです。
+        </div>
+        <div class="sim-cn">做游戏/AI工具网站的英译日，注重日语的自然度。设计方面用Canva做封面图和版面，发布前日语校对也是自己负责。最难忘是角色百科模板从设计到写代码全部独立完成，被英语团队也采用了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q3 繁忙情景 ── -->
+  <div class="sim-card" id="sim3">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q3 · 情景题</div>
+      <div class="sim-qtext">仕事が忙しいとき、日本語を話すお客様が来られたら、どう対応しますか？</div>
+      <div class="sim-qtext-en">How would you handle a Japanese-speaking guest approaching you while you are busy?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约45秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa3',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa3" class="sim-answer">
+        <div class="sim-ans-jp">
+          まず、「<span class="key">申し訳ございません</span>、今少し手が離せないんですが、すぐ対応しますね。少し待っていただけますか？」と伝えます。<br><br>
+          少し待っていただけるなら、「<span class="key">お待たせしました</span>！どのようなご用件でしょうか？」と対応します。<br><br>
+          もしすぐに対応できない場合は、「担当のスタッフをすぐに呼んできますね」と伝えて、別のスタッフに引き継ぎます。お客様を一人にしない、ということが大事だと思います。
+        </div>
+        <div class="sim-cn">先道歉说稍等，等一下立刻处理。真的无法处理就立刻去找其他同事帮忙，不让宾客独自等待。</div>
+        <div class="sim-tip">⚡ 必背短语：申し訳ございません / お待たせしました / 少し待っていただけますか</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q4 翻訳品質・校正プロセス【JD核心】 ── -->
+  <div class="sim-card" id="sim4">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q4 · JD核心考点</div>
+      <div class="sim-qtext">翻訳のクオリティをどう確保していますか？校正はどんなふうにやっていますか？</div>
+      <div class="sim-qtext-en">How do you ensure translation quality? Describe your proofreading process.</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约60秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa4',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa4" class="sim-answer">
+        <div class="sim-ans-jp">
+          翻訳で一番大事にしているのは、<span class="key">原文の意図を理解すること</span>です。言葉をそのまま訳すんじゃなくて、読んだ人に何を伝えたいかを考えながら訳しています。<br><br>
+          校正は3ステップでやっています。まず意味で訳す。次に、<span class="key">日本語として自然かどうか</span>を確認する。最後に、関連するページ全体で<span class="key">用語が統一されているか</span>チェックします。<br><br>
+          今の仕事では、発行前の日本語校正を一人で担当していました。20ページ以上のコンテンツを毎回チェックして、発行後に<span class="key">修正依頼がゼロ</span>だったこともあります。
+        </div>
+        <div class="sim-cn">原文意图→3步校对（翻译→自然度→术语统一）→独自负责发布前校对→零修改记录。</div>
+        <div class="sim-tip">⚡ 这是JD明确要求的技能，要说得具体！「修正依頼ゼロ」是有力的具体成果。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q5 引き継ぎノート【JD明确提到】 ── -->
+  <div class="sim-card" id="sim5">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q5 · JD明确要求</div>
+      <div class="sim-qtext">引き継ぎノートの作成や、チームへの情報共有はどのようにやっていますか？</div>
+      <div class="sim-qtext-en">How do you create handover notes and share information with your team?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约50秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa5',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa5" class="sim-answer">
+        <div class="sim-ans-jp">
+          今の仕事では、複数のプロジェクトが同時に進んでいるので、<span class="key">各作業の進捗と確認事項</span>をまとめた引き継ぎノートを作るようにしています。<br><br>
+          具体的には、何がどこまで完成しているか、次のステップは何か、確認が必要な部分はどこか、を明確に書くようにしています。そうすることで、<span class="key">他のメンバーが確認や承認をスムーズに</span>できます。<br><br>
+          特に締め切りが近いときは、漏れなく伝えることが大事だと思っているので、少し時間をかけてでも丁寧にまとめるようにしています。
+        </div>
+        <div class="sim-cn">记录进度+下一步+需要确认的地方→让其他人能顺畅地审核和审批→截止紧张时更要认真写，不能省略。</div>
+        <div class="sim-tip">⚡ JD原文：「creates comprehensive handover notes」—— 这题直接对应JD，要说到「丁寧にまとめる」的态度。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q6 口译题 ── -->
+  <div class="sim-card" id="sim6">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语口译</span>
+      <div class="sim-qnum">Q6 · 英日口译（最难题！）</div>
+      <div class="sim-qtext">Please interpret the following announcement into Japanese:</div>
+      <div class="sim-qtext-en" style="font-style:normal;color:var(--text);font-weight:600;padding:10px;background:#f8f9fa;border-radius:6px;margin-top:6px">"Good evening, ladies and gentlemen. Welcome aboard the Grand Princess. We are delighted to have you join us tonight. Please review the safety information in your cabin, and contact Guest Services if you need any help."</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>30秒</span></div>
+        <div class="sim-t-badge">可以意译 <span>不要卡壳</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa6',this)">先试着说一遍，再点这里对照</button>
+      <div id="sa6" class="sim-answer">
+        <div class="sim-ans-jp">
+          「皆様、こんばんは。グランド・プリンセス号へようこそ！<br>
+          本日は皆様をお迎えできて、とても嬉しいです。<br>
+          お部屋の安全に関する案内を、ぜひご確認ください。<br>
+          何かご不明な点があれば、ゲストサービスまでお気軽に<span class="key">何かあれば、いつでもお声がけください</span>。」
+        </div>
+        <div class="sim-cn">晚上好，欢迎登上大公主号！很高兴今晚迎接大家。请查看舱房内的安全说明，如有任何需要请联系宾客服务。</div>
+        <div class="sim-tip">⚡ 口译技巧：ladies and gentlemen → 皆様 | delighted → とても嬉しい | feel free → お気軽に<br>记住：意思对比语法更重要，不要因找词而沉默超3秒。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q7 多任务经历 ── -->
+  <div class="sim-card" id="sim7">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q7</div>
+      <div class="sim-qtext">締め切りが重なる中で複数の仕事を同時に対応した経験を教えてください。</div>
+      <div class="sim-qtext-en">Tell us about a time you managed multiple tasks with tight deadlines.</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约60秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa7',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa7" class="sim-answer">
+        <div class="sim-ans-jp">
+          以前、<span class="key">複数のサイトのコンテンツ更新と動画制作</span>が同じ時期に重なったことがあります。それぞれ締め切りが近くて、かなりタイトなスケジュールでした。<br><br>
+          そのときは、まず全部のタスクをリストにして<span class="key">優先順位を決め</span>ました。翻訳・デザイン・動画編集を時間帯ごとに分けて、一つひとつ集中して進めました。<br><br>
+          結果として、<span class="key">全部の締め切りに間に合わせること</span>ができました。今は、こういう複数対応には慣れています。
+        </div>
+        <div class="sim-cn">有过多个项目同时截止的经历，把任务列出来排优先级，按时间段分开做，最后全部按时完成了。现在对多任务已经习惯了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q8 なぜこの仕事 (JP) ── -->
+  <div class="sim-card" id="sim8">
+    <div class="sim-card-top">
+      <span class="lang-badge jp">🇯🇵 日语回答</span>
+      <div class="sim-qnum">Q8</div>
+      <div class="sim-qtext">なぜプリンセス・クルーズで働きたいと思いましたか？</div>
+      <div class="sim-qtext-en">Why do you want to work for Princess Cruises? (Japanese version)</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约50秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa8',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa8" class="sim-answer">
+        <div class="sim-ans-jp">
+          <span class="key">日本語もデザインも、両方活かせる仕事</span>がしたかったんです。このポジションを見たとき、まさに自分のためにあるような仕事だと思いました。<br><br>
+          それに、私は昔から<span class="key">いろんな国の人と関わることが好き</span>で、多様な文化の環境にすごく魅力を感じています。<br><br>
+          邮轮という場所は、毎日違うお客様に出会えて、世界と繋がれる特別な場所だと思います。そこで翻訳とデザインで貢献できるなら、これ以上ないと思っています。
+        </div>
+        <div class="sim-cn">想找能同时用上日语和设计的工作，这个岗位完全符合。而且我一直很喜欢和不同国家的人交流，邮轮这个能每天遇到来自各地宾客的特别场所，对我很有吸引力。</div>
+        <div class="sim-tip">⚡ 日语版不用讲南非爷爷的故事（太长），英语版Q9再讲。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q9 Why Princess Cruises (EN) ── -->
+  <div class="sim-card" id="sim9">
+    <div class="sim-card-top">
+      <span class="lang-badge en">🇬🇧 英语回答</span>
+      <div class="sim-qnum">Q9 · 必考 · 用真实故事</div>
+      <div class="sim-qtext">Why do you want to work for Princess Cruises?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>20秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约90秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa9',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa9" class="sim-answer">
+        <div class="sim-ans-en">
+          I want to share a story. One time, on a long bus trip, the man sitting next to me looked like a regular Chinese grandpa. But actually, <span class="key">he was from South Africa</span> — coming back to his hometown after decades. His mother tongue was French. My English wasn't great, neither was his.<br><br>
+          But somehow, we talked for hours. He told me about <span class="key">Réunion Island</span> — a place I never heard of — and showed me photos from parties there. That moment made me feel: <span class="key">language can connect completely different worlds</span>. The world is so much bigger than I thought.<br><br>
+          A cruise ship is like that bus journey — but every single day. People from different worlds, sharing the same space. And this role — translating, designing, helping Japanese guests feel at home — that's exactly how I want to be part of that.<br><br>
+          Also, my skills match directly: <span class="key">JLPT N1, graphic design experience, and Japanese translation</span> — all together, which is rare. Princess Cruises gives me the chance to use all of them at once.
+        </div>
+        <div class="sim-cn">讲南非爷爷的故事→连接到邮轮是「更大的那辆汽车」→这份工作是我参与其中的方式→我的技能刚好匹配。</div>
+        <div class="sim-tip">⚡ 故事部分可以用自己的语言讲，不用逐字背。最后的能力匹配要说清楚。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q10 Availability ── -->
+  <div class="sim-card" id="sim10">
+    <div class="sim-card-top">
+      <span class="lang-badge en">🇬🇧 英语回答</span>
+      <div class="sim-qnum">Q10 · 硬性问题</div>
+      <div class="sim-qtext">What is the earliest date you can board a ship?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>10秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约30秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa10',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa10" class="sim-answer">
+        <div class="sim-ans-en">
+          I would need about <span class="key">two months</span> in total. One month to properly hand over my current job. And one more month to get the paperwork done — in China, working on a cruise ship requires a <span class="key">Seafarer's Book</span> and some documentation, which takes around a month to process.<br><br>
+          I've already looked into the steps, so I can start that process right away once I have an offer.
+        </div>
+        <div class="sim-cn">约2个月：1个月交接 + 1个月办海员证和文件。已经了解了流程，拿到offer就立刻开始办。</div>
+        <div class="sim-tip">⚡ 主动提到海员证很加分——说明你真的认真研究过这份工作。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q11 Ship life ── -->
+  <div class="sim-card" id="sim11">
+    <div class="sim-card-top">
+      <span class="lang-badge en">🇬🇧 英语回答</span>
+      <div class="sim-qnum">Q11</div>
+      <div class="sim-qtext">Are you comfortable living and working on a ship for several months at a time?</div>
+      <div class="sim-timing">
+        <div class="sim-t-badge">准备时间 <span>15秒</span></div>
+        <div class="sim-t-badge">建议长度 <span>约40秒</span></div>
+      </div>
+    </div>
+    <div class="sim-divider"></div>
+    <div class="sim-answer-wrap">
+      <button class="reveal-sim-btn" onclick="revealSim('sa11',this)">先想一想，再点这里看参考答案</button>
+      <div id="sa11" class="sim-answer">
+        <div class="sim-ans-en">
+          Yes, completely. I've been living away from my hometown since university — <span class="key">I've been independent for years</span>, so the idea of being away from home for months is not new to me.<br><br>
+          Honestly, waking up in a different port, meeting guests from all over the world, working in a team with so many different cultures — <span class="key">that sounds exciting to me, not scary</span>. I adapt quickly. And I think the daily routine on a ship — where there's always something to design or translate — would suit how I work.
+        </div>
+        <div class="sim-cn">大学起就离开家乡独立生活，长期离家已经习惯了。每天不同的港口、来自世界各地的宾客、多元文化的团队——听起来很令人期待，不会害怕。我适应快，船上每天有东西要做的节奏也很适合我。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box green" style="margin-top:8px">
+    <strong>🎉 全部11题练完了！</strong>
+    现在关上这个页面，对着真实摄像头，完整过一遍不看任何提示。如果能顺畅说下来，你就准备好了。
+  </div>
+</div>
+
+<!-- BOTTOM NAV (mobile only) -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-btn active" onclick="switchTab('overview')"><span class="bn-ico">📋</span>概况</button>
+  <button class="bn-btn" onclick="switchTab('vocab-jp')"><span class="bn-ico">🇯🇵</span>词汇</button>
+  <button class="bn-btn" onclick="switchTab('jp-qa')"><span class="bn-ico">💬</span>日语题</button>
+  <button class="bn-btn" onclick="switchTab('translation')"><span class="bn-ico">🔤</span>口译</button>
+  <button class="bn-btn" onclick="switchTab('en-qa')"><span class="bn-ico">🇬🇧</span>英语题</button>
+  <button class="bn-btn" onclick="switchTab('checklist')"><span class="bn-ico">✅</span>清单</button>
+</nav>
+
+<script>
+const TAB_MAP = {
+  'overview':0,'vocab-jp':1,'patterns':2,'jp-qa':3,
+  'translation':4,'en-qa':5,'vocab-en':6,'checklist':7,'sim':8
+};
+const BOTTOM_NAV_MAP = {
+  'overview':0,'vocab-jp':1,'jp-qa':2,'translation':3,'en-qa':4,'checklist':5
+};
+
+function switchTab(id) {
+  // Update top tab active highlight
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const btns = document.querySelectorAll('.tab-btn');
+  const idx = TAB_MAP[id];
+  if (idx !== undefined && btns[idx]) {
+    btns[idx].classList.add('active');
+    try { btns[idx].scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'}); } catch(e){}
+  }
+  // Update bottom nav active highlight
+  document.querySelectorAll('.bn-btn').forEach(b => b.classList.remove('active'));
+  const bnIdx = BOTTOM_NAV_MAP[id];
+  if (bnIdx !== undefined) {
+    const bnBtns = document.querySelectorAll('.bn-btn');
+    if (bnBtns[bnIdx]) bnBtns[bnIdx].classList.add('active');
+  }
+  // Scroll to section
+  const target = document.getElementById('panel-' + id);
+  if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function toggleTrans(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const btn = el.previousElementSibling;
+  const isHidden = el.classList.contains('hidden');
+  el.classList.toggle('hidden', !isHidden);
+  if (btn) btn.textContent = isHidden ? '🔼 隐藏日语译文' : '👆 点击显示参考日语译文';
+}
+
+function toggleDone(checkbox) {
+  checkbox.closest('.cl-item').classList.toggle('done', checkbox.checked);
+}
+
+// ── SIMULATION LOGIC ──
+const SIM_META = {
+  1:{lang:'日语回答',hint:'建议约75秒'},
+  2:{lang:'日语回答',hint:'建议约60秒'},
+  3:{lang:'日语情景',hint:'建议约45秒'},
+  4:{lang:'日语情景',hint:'建议约50秒'},
+  5:{lang:'日语情景',hint:'建议约40秒'},
+  6:{lang:'日语口译',hint:'意思对即可'},
+  7:{lang:'日语回答',hint:'建议约60秒'},
+  8:{lang:'日语回答',hint:'建议约50秒'},
+  9:{lang:'英语回答',hint:'建议约90秒'},
+  10:{lang:'英语回答',hint:'建议约30秒'},
+  11:{lang:'英语回答',hint:'建议约40秒'}
+};
+let simCurrent = 1;
+const simDone = new Set();
+
+function updateSimProgress() {
+  const m = SIM_META[simCurrent];
+  document.getElementById('simProgressText').textContent = `第 ${simCurrent} 题 / 共 11 题`;
+  document.getElementById('simProgressSub').textContent = `${m.lang} · ${m.hint}`;
+  document.querySelectorAll('.sim-dot').forEach((d,i) => {
+    d.classList.remove('active');
+    d.classList.toggle('done', simDone.has(i+1));
+  });
+  const activeDot = document.getElementById('dot'+simCurrent);
+  if (activeDot) activeDot.classList.add('active');
+}
+
+function goSim(n) {
+  document.getElementById('sim'+simCurrent).classList.remove('active');
+  simCurrent = n;
+  document.getElementById('sim'+simCurrent).classList.add('active');
+  updateSimProgress();
+  document.querySelector('.sim-dots').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function nextSim() {
+  simDone.add(simCurrent);
+  if (simCurrent < 11) goSim(simCurrent + 1);
+  else updateSimProgress();
+}
+
+function prevSim() {
+  if (simCurrent > 1) goSim(simCurrent - 1);
+}
+
+function revealSim(id, btn) {
+  const el = document.getElementById(id);
+  const showing = el.classList.contains('show');
+  el.classList.toggle('show', !showing);
+  btn.textContent = showing ? '先想一想，再点这里看参考答案' : '🔼 收起答案';
+}
+
+// Update active tab highlight when scrolling (IntersectionObserver)
+(function(){
+  if (!window.IntersectionObserver) return;
+  const panels = document.querySelectorAll('.panel');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id.replace('panel-', '');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        const btns = document.querySelectorAll('.tab-btn');
+        const idx = TAB_MAP[id];
+        if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
+        document.querySelectorAll('.bn-btn').forEach(b => b.classList.remove('active'));
+        const bnIdx = BOTTOM_NAV_MAP[id];
+        if (bnIdx !== undefined) {
+          const bnBtns = document.querySelectorAll('.bn-btn');
+          if (bnBtns[bnIdx]) bnBtns[bnIdx].classList.add('active');
+        }
+      }
+    });
+  }, {threshold: 0.15});
+  panels.forEach(p => observer.observe(p));
+})();
+</script>
+</body>
+</html>

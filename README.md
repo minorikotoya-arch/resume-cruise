@@ -13,6 +13,7 @@ resume-cruise/
 ├── Huang-Mingyi-Resume.html           # Princess Cruises — Graphic Designer & Translator
 ├── Huang-Mingyi-Resume-Viking.html    # Viking Cruises — Japanese Speaking Explorer Staff
 ├── Huang-Mingyi-Resume-DCL.html       # Disney Cruise Line — Guest Services (Project Hiro)
+├── interview-prep.html                # Princess Cruises — Hireflix Interview Prep (JP/EN)
 └── cruise ship/                       # PDF exports for submission
 ```
 
